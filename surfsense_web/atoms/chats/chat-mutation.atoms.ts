@@ -68,10 +68,16 @@ export const updateChatMutationAtom = atomWithMutation((get) => {
 			return chatsApiService.updateChat(request);
 		},
 
-		onSuccess: () => {
-			queryClient.invalidateQueries({
-				queryKey: cacheKeys.chats.globalQueryParams(chatsQueryParams),
-			});
+		onSuccess: (_, request: UpdateChatRequest) => {
+			toast.success("Chat updated successfully");
+			queryClient.setQueryData(
+				cacheKeys.chats.globalQueryParams(chatsQueryParams),
+				(oldData: Chat[]) => {
+					return oldData.map((chat) =>
+						chat.id === request.id ? { ...chat, ...request } : chat
+					);
+				}
+			);
 		},
 	};
 });

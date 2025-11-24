@@ -52,8 +52,13 @@ class ChatCreate(ChatBase):
     pass
 
 
-class ChatUpdate(ChatBase):
-    pass
+class ChatUpdate(BaseModel):
+    type: ChatType | None = None
+    title: str | None = None
+    initial_connectors: list[str] | None = None
+    messages: list[Any] | None = None
+    search_space_id: int | None = None
+    state_version: int | None = None
 
 
 class ChatRead(ChatBase, IDModel, TimestampModel):
