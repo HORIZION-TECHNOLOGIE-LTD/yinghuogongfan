@@ -7,6 +7,7 @@ import {
 	ExternalLink,
 	MessageCircleMore,
 	MoreHorizontal,
+	Pencil,
 	Search,
 	Tag,
 	Trash2,
@@ -14,7 +15,7 @@ import {
 import { AnimatePresence, motion, type Variants } from "motion/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { deleteChatMutationAtom } from "@/atoms/chats/chat-mutation.atoms";
+import { deleteChatMutationAtom, updateChatMutationAtom } from "@/atoms/chats/chat-mutation.atoms";
 import { chatsAtom } from "@/atoms/chats/chat-query.atoms";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -103,9 +104,16 @@ export default function ChatsPageClient({ searchSpaceId }: ChatsPageClientProps)
 		id: number;
 		title: string;
 	} | null>(null);
+	const [renameDialogOpen, setRenameDialogOpen] = useState(false);
+	const [chatToRename, setChatToRename] = useState<{
+		id: number;
+		title: string;
+	} | null>(null);
+	const [newChatTitle, setNewChatTitle] = useState("");
 	const { isFetching: isFetchingChats, data: chats, error: fetchError } = useAtomValue(chatsAtom);
 	const [{ isPending: isDeletingChat, mutateAsync: deleteChat, error: deleteError }] =
 		useAtom(deleteChatMutationAtom);
+	const [{ isPending: isRenamingChat, mutateAsync: updateChat }] = useAtom(updateChatMutationAtom);
 
 	const chatsPerPage = 9;
 	const searchParams = useSearchParams();
@@ -161,6 +169,17 @@ export default function ChatsPageClient({ searchSpaceId }: ChatsPageClientProps)
 
 		setDeleteDialogOpen(false);
 		setChatToDelete(null);
+	};
+
+	// Function to handle chat rename
+	const handleRenameChat = async () => {
+		if (!chatToRename || !newChatTitle.trim()) return;
+
+		await updateChat({ id: chatToRename.id, title: newChatTitle.trim() });
+
+		setRenameDialogOpen(false);
+		setChatToRename(null);
+		setNewChatTitle("");
 	};
 
 	// Calculate pagination
@@ -303,6 +322,20 @@ export default function ChatsPageClient({ searchSpaceId }: ChatsPageClientProps)
 													>
 														<ExternalLink className="mr-2 h-4 w-4" />
 														<span>View Chat</span>
+													</DropdownMenuItem>
+													<DropdownMenuItem
+														onClick={(e) => {
+															e.stopPropagation();
+															setChatToRename({
+																id: chat.id,
+																title: chat.title || `Chat ${chat.id}`,
+															});
+															setNewChatTitle(chat.title || `Chat ${chat.id}`);
+															setRenameDialogOpen(true);
+														}}
+													>
+														<Pencil className="mr-2 h-4 w-4" />
+														<span>Rename Chat</span>
 													</DropdownMenuItem>
 													<DropdownMenuSeparator />
 													<DropdownMenuItem
@@ -447,6 +480,67 @@ export default function ChatsPageClient({ searchSpaceId }: ChatsPageClientProps)
 								<>
 									<Trash2 className="h-4 w-4" />
 									Delete
+								</>
+							)}
+						</Button>
+					</DialogFooter>
+				</DialogContent>
+			</Dialog>
+
+			{/* Rename Chat Dialog */}
+			<Dialog open={renameDialogOpen} onOpenChange={setRenameDialogOpen}>
+				<DialogContent className="sm:max-w-md">
+					<DialogHeader>
+						<DialogTitle className="flex items-center gap-2">
+							<Pencil className="h-5 w-5" />
+							<span>Rename Chat</span>
+						</DialogTitle>
+						<DialogDescription>
+							Enter a new name for{" "}
+							<span className="font-medium">{chatToRename?.title}</span>
+						</DialogDescription>
+					</DialogHeader>
+					<div className="py-4">
+						<Input
+							type="text"
+							placeholder="Enter new chat name..."
+							value={newChatTitle}
+							onChange={(e) => setNewChatTitle(e.target.value)}
+							onKeyDown={(e) => {
+								if (e.key === "Enter" && newChatTitle.trim()) {
+									handleRenameChat();
+								}
+							}}
+							disabled={isRenamingChat}
+							autoFocus
+						/>
+					</div>
+					<DialogFooter className="flex gap-2 sm:justify-end">
+						<Button
+							variant="outline"
+							onClick={() => {
+								setRenameDialogOpen(false);
+								setChatToRename(null);
+								setNewChatTitle("");
+							}}
+							disabled={isRenamingChat}
+						>
+							Cancel
+						</Button>
+						<Button
+							onClick={handleRenameChat}
+							disabled={isRenamingChat || !newChatTitle.trim()}
+							className="gap-2"
+						>
+							{isRenamingChat ? (
+								<>
+									<span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+									Renaming...
+								</>
+							) : (
+								<>
+									<Pencil className="h-4 w-4" />
+									Rename
 								</>
 							)}
 						</Button>

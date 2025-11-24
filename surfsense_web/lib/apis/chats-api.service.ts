@@ -108,20 +108,14 @@ class ChatApiService {
 			throw new ValidationError(`Invalid request: ${errorMessage}`);
 		}
 
-		const { type, title, initial_connectors, messages, search_space_id, id } = parsedRequest.data;
+		const { id, ...updateData } = parsedRequest.data;
 
 		return baseApiService.put(
 			`/api/v1/chats/${id}`,
 
 			chatSummary,
 			{
-				body: {
-					type,
-					title,
-					initial_connectors,
-					messages,
-					search_space_id,
-				},
+				body: updateData,
 			}
 		);
 	};

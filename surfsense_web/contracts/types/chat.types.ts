@@ -40,10 +40,13 @@ export const createChatRequest = chatDetails.omit({
 	state_version: true,
 });
 
-export const updateChatRequest = chatDetails.omit({
-	created_at: true,
-	state_version: true,
-});
+export const updateChatRequest = chatDetails
+	.omit({
+		created_at: true,
+		state_version: true,
+	})
+	.partial()
+	.required({ id: true });
 
 export type ChatSummary = z.infer<typeof chatSummary>;
 export type ChatDetails = z.infer<typeof chatDetails> & { messages: Message[] };
