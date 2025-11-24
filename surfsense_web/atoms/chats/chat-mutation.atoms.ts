@@ -72,7 +72,8 @@ export const updateChatMutationAtom = atomWithMutation((get) => {
 			toast.success("Chat updated successfully");
 			queryClient.setQueryData(
 				cacheKeys.chats.globalQueryParams(chatsQueryParams),
-				(oldData: Chat[]) => {
+				(oldData: Chat[] | undefined) => {
+					if (!oldData) return oldData;
 					return oldData.map((chat) =>
 						chat.id === request.id ? { ...chat, ...request } : chat
 					);

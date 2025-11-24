@@ -520,6 +520,7 @@ export default function ChatsPageClient({ searchSpaceId }: ChatsPageClientProps)
 							variant="outline"
 							onClick={() => {
 								setRenameDialogOpen(false);
+								setChatToRename(null);
 								setNewChatTitle("");
 							}}
 							disabled={isRenamingChat}
