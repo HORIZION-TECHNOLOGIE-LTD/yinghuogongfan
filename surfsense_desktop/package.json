@@ -12,7 +12,8 @@
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
     "validate": "node validate.js",
-    "icons": "node generate-icons.js"
+    "icons": "node generate-icons.js",
+    "test": "node test-build-config.js"
   },
   "keywords": [
     "surfsense",

@@ -1,5 +1,6 @@
 const { app, BrowserWindow, Menu, Tray, nativeImage } = require('electron');
 const path = require('path');
+const fs = require('fs');
 const { spawn } = require('child_process');
 
 let mainWindow = null;
@@ -33,9 +34,19 @@ function createWindow() {
   });
 
   // Load the app
-  const startUrl = isDev
-    ? `http://localhost:${FRONTEND_PORT}`
-    : `file://${path.join(__dirname, 'build/index.html')}`;
+  let startUrl;
+  if (isDev) {
+    startUrl = `http://localhost:${FRONTEND_PORT}`;
+  } else {
+    // In production, check if build exists, otherwise use backend URL
+    const buildPath = path.join(__dirname, 'build/index.html');
+    if (fs.existsSync(buildPath)) {
+      startUrl = `file://${buildPath}`;
+    } else {
+      console.warn('Build directory not found, using backend URL');
+      startUrl = `http://localhost:${FRONTEND_PORT}`;
+    }
+  }
   
   mainWindow.loadURL(startUrl);
 
@@ -104,14 +115,18 @@ function startBackend() {
   if (isDev && process.env.START_BACKEND === 'true') {
     console.log('Starting backend server...');
     // Start the Python backend
+    // Note: Uses 'python' command. On Windows, ensure Python is in PATH.
+    // Alternatively, set PYTHON_CMD environment variable to specify python3 or full path.
+    const pythonCmd = process.env.PYTHON_CMD || 'python';
     const backendPath = path.join(__dirname, '..', 'surfsense_backend');
-    backendProcess = spawn('python', ['-m', 'uvicorn', 'main:app', '--reload', '--port', BACKEND_PORT], {
+    backendProcess = spawn(pythonCmd, ['-m', 'uvicorn', 'main:app', '--reload', '--port', BACKEND_PORT], {
       cwd: backendPath,
       stdio: 'inherit'
     });
 
     backendProcess.on('error', (err) => {
       console.error('Failed to start backend:', err);
+      console.error('Tip: Ensure Python is installed and in PATH, or set PYTHON_CMD environment variable');
     });
   }
 }

@@ -51,16 +51,18 @@ async function generateIcons() {
       console.log(`✅ Created icon-${size}.png (${size}x${size})`);
     }
 
-    console.log('\n📝 Note: .ico file generation requires additional tools.');
-    console.log('   To create icon.ico:');
+    console.log('\n📝 Note: Proper .ico file generation requires additional tools.');
+    console.log('   To create a proper multi-size icon.ico for production:');
     console.log('   1. Use online tool: https://convertico.com/');
     console.log('   2. Or use ImageMagick: convert icon-*.png icon.ico');
     console.log('   3. Or use png-to-ico package: npm install -g png-to-ico && png-to-ico assets/icon-256.png > assets/icon.ico');
-    console.log('\n   For now, copying the 256x256 PNG as a fallback...');
+    console.log('\n   ⚠️  For now, copying the 256x256 PNG as a fallback...');
+    console.log('   This is NOT a proper ICO format and may not display correctly in all contexts.');
+    console.log('   Use this for development only. Create a proper .ico for production.');
     
     // Copy 256x256 as icon.ico (not a real .ico but will work for development)
     fs.copyFileSync(path.join(assetsDir, 'icon-256.png'), path.join(assetsDir, 'icon.ico'));
-    console.log('✅ Created icon.ico (development fallback)');
+    console.log('✅ Created icon.ico (development fallback only)');
 
     console.log('\n✨ All placeholder icons generated successfully!');
     console.log('📌 Remember to replace these with proper SurfSense branded icons before production release.');
