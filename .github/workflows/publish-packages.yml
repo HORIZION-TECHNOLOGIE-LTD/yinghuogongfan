@@ -120,11 +120,13 @@ jobs:
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
-          TWINE_REPOSITORY_URL: https://upload.pypi.org/legacy/
         run: |
-          # Note: GitHub Packages for PyPI requires enterprise account
-          # This workflow is prepared but may need adjustment based on account type
-          twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
+          # Note: GitHub Packages for Python (PyPI format) has limited availability
+          # This is prepared for when it becomes available for your account type
+          # For now, you may need to publish to PyPI or use alternative methods
+          # Uncomment and configure based on your account capabilities:
+          # twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
+          echo "Python package built successfully. Configure PyPI or GitHub Packages PyPI when ready."
 
   publish-docker:
     name: Publish Docker Images

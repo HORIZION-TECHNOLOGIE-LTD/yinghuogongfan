@@ -155,7 +155,9 @@ cd my-surfsense-project
 ./path/to/surfsense/scripts/setup-github-packages.sh
 
 # Create docker-compose.yml (see Example 1)
-curl -o docker-compose.yml https://raw.githubusercontent.com/hhongli1979-coder/chiban888/main/docs/docker-compose.github-packages.yml
+# Download the example file from the repository
+wget -O docker-compose.yml https://raw.githubusercontent.com/MODSetter/SurfSense/main/docs/docker-compose.github-packages.yml
+# Or copy from local docs/docker-compose.github-packages.yml if you have the repo cloned
 
 # Start services
 docker-compose up -d

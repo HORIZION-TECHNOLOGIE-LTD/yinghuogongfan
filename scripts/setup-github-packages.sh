@@ -24,7 +24,8 @@ if [ -z "$GITHUB_TOKEN" ]; then
     echo "  2. Create a token with 'read:packages' scope"
     echo "  3. Run: export GITHUB_TOKEN=your_token_here"
     echo ""
-    read -p "Enter your GitHub token: " token
+    read -s -p "Enter your GitHub token: " token
+    echo ""
     GITHUB_TOKEN=$token
 fi
 
