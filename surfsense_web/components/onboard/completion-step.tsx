@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { useGlobalLLMConfigs, useLLMConfigs, useLLMPreferences } from "@/hooks/use-llm-configs";
+import { useGlobalLLMConfigs, useLLMConfigs } from "@/hooks/use-llm-configs";
 
 interface CompletionStepProps {
 	searchSpaceId: number;
@@ -16,8 +16,6 @@ export function CompletionStep({ searchSpaceId }: CompletionStepProps) {
 	const router = useRouter();
 	const { llmConfigs } = useLLMConfigs(searchSpaceId);
 	const { globalConfigs } = useGlobalLLMConfigs();
-	// Preferences are fetched but not used in display - kept for future use
-	useLLMPreferences(searchSpaceId);
 
 	// Combine global and user-specific configs
 	const allConfigs = [...globalConfigs, ...llmConfigs];

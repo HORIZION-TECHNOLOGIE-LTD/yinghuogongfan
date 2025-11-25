@@ -9,7 +9,6 @@ interface DisplayCardProps {
 	title?: string;
 	description?: string;
 	date?: string;
-	iconClassName?: string;
 	titleClassName?: string;
 }
 
