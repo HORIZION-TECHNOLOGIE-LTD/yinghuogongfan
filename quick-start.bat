@@ -30,8 +30,18 @@ REM Create root .env file if it doesn't exist
 if not exist .env (
     echo Creating root .env file...
     copy .env.example .env >nul
-    echo [OK] Created .env file
-    echo [WARNING] Please edit .env and set a secure POSTGRES_PASSWORD
+    
+    REM Try to generate a secure password using PowerShell
+    powershell -Command "$pwd = -join ((48..57) + (65..90) + (97..122) | Get-Random -Count 32 | ForEach-Object {[char]$_}); (Get-Content .env) -replace 'POSTGRES_PASSWORD=postgres', \"POSTGRES_PASSWORD=$pwd\" | Set-Content .env" >nul 2>&1
+    
+    if errorlevel 0 (
+        echo [OK] Created .env file with secure password
+    ) else (
+        echo [OK] Created .env file
+        echo [WARNING] Please edit .env and set a secure POSTGRES_PASSWORD
+        echo [INFO] You can generate a secure password with PowerShell:
+        echo [INFO] -join ((48..57) + (65..90) + (97..122) ^| Get-Random -Count 32 ^| ForEach-Object {[char]$_})
+    )
 ) else (
     echo [WARNING] Root .env file already exists, skipping...
 )

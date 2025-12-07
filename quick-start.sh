@@ -39,11 +39,21 @@ if [ ! -f .env ]; then
     cp .env.example .env
     
     # Generate a secure PostgreSQL password
-    PG_PASSWORD=$(openssl rand -base64 32 2>/dev/null || echo "please_change_this_password")
-    sed -i.bak "s/POSTGRES_PASSWORD=postgres/POSTGRES_PASSWORD=${PG_PASSWORD}/" .env
-    rm -f .env.bak
-    
-    echo -e "${GREEN}✓ Created .env file with secure password${NC}"
+    if command -v openssl &> /dev/null; then
+        PG_PASSWORD=$(openssl rand -base64 32)
+        # Escape special characters in password for sed
+        PG_PASSWORD_ESCAPED=$(echo "$PG_PASSWORD" | sed 's/[\/&]/\\&/g')
+        if sed -i.bak "s/POSTGRES_PASSWORD=postgres/POSTGRES_PASSWORD=${PG_PASSWORD_ESCAPED}/" .env 2>/dev/null; then
+            rm -f .env.bak
+            echo -e "${GREEN}✓ Created .env file with secure password${NC}"
+        else
+            rm -f .env.bak
+            echo -e "${YELLOW}⚠ Created .env file, but please manually set a secure POSTGRES_PASSWORD${NC}"
+        fi
+    else
+        echo -e "${YELLOW}⚠ OpenSSL not found. Created .env file, but please manually set a secure POSTGRES_PASSWORD${NC}"
+        echo -e "${YELLOW}   You can generate one with: openssl rand -base64 32${NC}"
+    fi
 else
     echo -e "${YELLOW}⚠ Root .env file already exists, skipping...${NC}"
 fi
