@@ -16,13 +16,19 @@ version: '3.8'
 
 services:
   pal-mcp:
-    # Note: You'll need to build this image yourself from https://github.com/HORIZION-TECHNOLOGIE-LTD/DASHI
-    # Or use the official image if available: beehiveinnovations/pal-mcp-server:latest
+    # BUILD OPTION: Build PAL MCP from source (recommended for latest features)
+    # Clone DASHI repository one level up from SurfSense:
+    #   cd .. && git clone https://github.com/HORIZION-TECHNOLOGIE-LTD/DASHI.git
+    # Then the relative path below will work correctly.
     build:
-      context: ../DASHI  # Adjust this path if you clone DASHI elsewhere
+      context: ../DASHI  # Adjust this path to match your DASHI clone location
       dockerfile: Dockerfile
-    # Alternatively, use pre-built image (if available):
+    
+    # PRE-BUILT IMAGE OPTION: Use official Docker image (if available)
+    # Note: As of this writing, verify image availability before use
+    # Uncomment the line below and comment out the 'build' section above:
     # image: beehiveinnovations/pal-mcp-server:latest
+    
     container_name: surfsense_pal_mcp
     restart: unless-stopped
     ports:

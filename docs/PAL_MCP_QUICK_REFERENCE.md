@@ -146,9 +146,11 @@ real-time search to the research agent"
 ## Resources
 
 - [Full Integration Guide](PAL_MCP_INTEGRATION.md)
-- [PAL MCP Documentation](https://github.com/HORIZION-TECHNOLOGIE-LTD/DASHI/blob/main/docs/index.md)
-- [PAL MCP GitHub](https://github.com/HORIZION-TECHNOLOGIE-LTD/DASHI)
+- [PAL MCP (DASHI) GitHub Repository](https://github.com/HORIZION-TECHNOLOGIE-LTD/DASHI)
+- PAL MCP Documentation - See DASHI repository for latest tools and setup
 - [SurfSense Documentation](https://www.surfsense.net/docs/)
+
+**Note**: Refer to DASHI repository README for the most current documentation and tool details.
 
 ## Example Workflows
 

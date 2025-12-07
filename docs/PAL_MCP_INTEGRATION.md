@@ -185,7 +185,7 @@ SurfSense already supports multiple LLM providers through LiteLLM. PAL MCP exten
    ```
 
 2. **Configure your AI CLI** (e.g., Claude Code):
-   Follow PAL MCP's [setup guide](https://github.com/HORIZION-TECHNOLOGIE-LTD/DASHI/blob/main/docs/getting-started.md)
+   Follow PAL MCP's setup guide in the DASHI repository documentation. Refer to the DASHI README.md for the latest setup instructions.
 
 3. **Start using with SurfSense**:
    ```
@@ -238,10 +238,12 @@ For production deployments, consider:
 
 ## References
 
-- [PAL MCP GitHub Repository](https://github.com/HORIZION-TECHNOLOGIE-LTD/DASHI)
-- [PAL MCP Documentation](https://github.com/HORIZION-TECHNOLOGIE-LTD/DASHI/blob/main/docs/index.md)
+- [PAL MCP (DASHI) GitHub Repository](https://github.com/HORIZION-TECHNOLOGIE-LTD/DASHI)
+- PAL MCP Documentation - See DASHI repository README and documentation files
 - [Model Context Protocol](https://modelcontextprotocol.com)
 - [SurfSense Documentation](https://www.surfsense.net/docs/)
+
+**Note**: For the latest PAL MCP documentation, tools, and setup instructions, always refer to the DASHI repository README as the documentation structure may evolve.
 
 ## Contributing
 
