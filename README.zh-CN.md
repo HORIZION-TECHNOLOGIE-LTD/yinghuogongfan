@@ -135,6 +135,17 @@ https://github.com/user-attachments/assets/a0a16566-6967-4374-ac51-9b3e07fbecd7
 
 
 
+## 🤖 使用 PAL MCP 增强 AI 能力
+
+SurfSense 可以通过 [PAL MCP (DASHI)](https://github.com/HORIZION-TECHNOLOGIE-LTD/DASHI) 进行增强 - 这是一个提供者抽象层，可实现**多模型 AI 编排**。这个可选集成允许您：
+
+- **咨询多个 AI 模型**（GPT-5、Gemini Pro、Claude、O3）以提高研究质量
+- **获得多个模型的共识**，处理复杂的研究主题
+- **使用专业工作流**，如代码审查、调试和扩展思考
+- **突破上下文限制**，通过委托给拥有更大窗口的模型（Gemini 1M tokens）
+
+[了解更多关于 PAL MCP 集成 →](docs/PAL_MCP_INTEGRATION.md)
+
 ## 功能请求与未来规划
 
 **SurfSense 正在积极开发中。** 虽然它还未达到生产就绪状态，但您可以帮助我们加快进度。
