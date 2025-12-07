@@ -1,6 +1,11 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import 'grapesjs/dist/css/grapes.min.css';
+
+interface GrapesJSEditor {
+  destroy: () => void;
+}
 
 /**
  * GrapesJSEditorWithTabs Component
@@ -24,8 +29,7 @@ export default function GrapesJSEditorWithTabs() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // biome-ignore lint/suspicious/noExplicitAny: GrapesJS editor type is not exported
-    let editor: any = null;
+    let editor: GrapesJSEditor | null = null;
 
     const initEditor = async () => {
       try {
@@ -53,19 +57,12 @@ export default function GrapesJSEditorWithTabs() {
             },
           },
 
-          // Storage configuration
-          storageManager: {
-            type: 'local',
-            autosave: true,
-            autoload: true,
-            stepsBeforeSave: 1,
-          },
+          // Storage configuration - disabled by default for security
+          storageManager: false,
 
-          // Canvas configuration
+          // Canvas configuration (no external CDN for security)
           canvas: {
-            styles: [
-              'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css',
-            ],
+            styles: [],
           },
 
           // Block manager configuration
@@ -168,15 +165,28 @@ export default function GrapesJSEditorWithTabs() {
   }
 
   return (
-    <div className="h-screen w-full flex flex-col">
-      {/* Editor toolbar will be here */}
-      <div ref={editorRef} className="flex-1" />
-      
-      {/* Side panels */}
-      <div className="hidden">
+    <div className="h-screen w-full flex">
+      {/* Side panel - Blocks */}
+      <div className="w-64 bg-gray-50 border-r border-gray-200 p-4 overflow-y-auto">
+        <h3 className="font-semibold mb-3 text-sm text-gray-700">Blocks</h3>
         <div id="blocks" />
-        <div id="styles" />
-        <div id="layers" />
+      </div>
+      
+      {/* Main editor canvas */}
+      <div className="flex-1 flex flex-col">
+        <div ref={editorRef} className="flex-1" />
+      </div>
+      
+      {/* Side panel - Styles and Layers */}
+      <div className="w-80 bg-gray-50 border-l border-gray-200 p-4 overflow-y-auto">
+        <div className="mb-6">
+          <h3 className="font-semibold mb-3 text-sm text-gray-700">Styles</h3>
+          <div id="styles" />
+        </div>
+        <div>
+          <h3 className="font-semibold mb-3 text-sm text-gray-700">Layers</h3>
+          <div id="layers" />
+        </div>
       </div>
     </div>
   );
