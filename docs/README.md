@@ -34,6 +34,19 @@ This directory contains documentation and examples for integrating SurfSense int
 
 ## 🚀 Quick Start Integration Guide
 
+### Quick Deployment
+
+Use the provided deployment script:
+```bash
+chmod +x deploy.sh  # Make the script executable
+./deploy.sh
+```
+
+Or manually with Docker:
+```bash
+docker-compose up -d
+```
+
 ### Option 1: Subdomain (Recommended)
 
 **Best for:** Production deployments where you want SurfSense to be a first-class service

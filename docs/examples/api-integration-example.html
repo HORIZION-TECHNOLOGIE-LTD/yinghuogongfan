@@ -260,7 +260,7 @@
                     authToken = data.access_token;
                     localStorage.setItem('surfsense_token', authToken);
                     resultDiv.className = 'result success';
-                    resultDiv.textContent = '✓ Login successful!\\n\\nToken: ' + authToken.substring(0, 50) + '...';
+                    resultDiv.textContent = '✓ Login successful! Token saved to localStorage.';
                 } else {
                     resultDiv.className = 'result error';
                     resultDiv.textContent = '✗ Login failed: ' + (data.detail || 'Unknown error');
