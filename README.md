@@ -125,6 +125,10 @@ Open source and easy to deploy locally.
 - The SurfSense extension can be used to save any webpage you like.
 - Its main usecase is to save any webpages protected beyond authentication.
 
+### 🕷️ Web Crawling
+- Built-in support for Firecrawl and AsyncChromiumLoader for webpage content extraction
+- **WebMagic Integration**: For users requiring advanced web scraping capabilities, especially for Chinese websites, SurfSense can be integrated with [WebMagic](https://github.com/code4craft/webmagic) - a powerful Java-based web crawler framework
+- See [WebMagic Integration Guide](docs/webmagic-integration.md) for detailed setup instructions
 
 
 ## FEATURE REQUESTS AND FUTURE
