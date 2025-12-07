@@ -69,7 +69,7 @@ WebMagic 特别适合以下场景：
 
 ### 1. 环境要求 | Requirements
 
-- **Java**: JDK 1.7 或更高版本
+- **Java**: JDK 8 或更高版本（推荐 JDK 11 或 JDK 17）
 - **Maven**: 3.x 或更高版本（推荐）
 
 ### 2. Maven 依赖 | Maven Dependency
@@ -187,31 +187,91 @@ public class SurfSenseCrawler implements PageProcessor {
 ### Spring Boot WebMagic 服务 | Spring Boot WebMagic Service
 
 ```java
+// Request and Response DTOs
+public class CrawlRequest {
+    private String url;
+    private Integer threads;
+    private Integer depth;
+    
+    // Getters and setters omitted for brevity
+}
+
+public class CrawlResult {
+    private String url;
+    private String status;
+    private Map<String, Object> data;
+    
+    public CrawlResult(String url, String status, Map<String, Object> data) {
+        this.url = url;
+        this.status = status;
+        this.data = data;
+    }
+    
+    // Getters and setters omitted for brevity
+}
+
+// Custom PageProcessor implementation
+class CustomPageProcessor implements PageProcessor {
+    private CrawlRequest request;
+    private Site site;
+    
+    public CustomPageProcessor(CrawlRequest request) {
+        this.request = request;
+        this.site = Site.me()
+            .setRetryTimes(3)
+            .setSleepTime(1000)
+            .setCharset("UTF-8");
+    }
+    
+    @Override
+    public void process(Page page) {
+        // Extract data based on request configuration
+        page.putField("title", page.getHtml().xpath("//title/text()").toString());
+        page.putField("content", page.getHtml().xpath("//body/text()").toString());
+        page.putField("url", page.getUrl().toString());
+    }
+    
+    @Override
+    public Site getSite() {
+        return site;
+    }
+}
+
+// Controller implementation
 @RestController
 @RequestMapping("/api/crawler")
 public class WebMagicController {
     
+    @Autowired
+    private CrawlStatusService crawlStatusService;
+    
     @PostMapping("/crawl")
     public CrawlResult crawlUrl(@RequestBody CrawlRequest request) {
-        // 创建爬虫实例
-        Spider spider = Spider.create(new CustomPageProcessor(request))
+        // Create spider instance
+        CustomPageProcessor processor = new CustomPageProcessor(request);
+        Spider spider = Spider.create(processor)
                 .addUrl(request.getUrl())
                 .thread(request.getThreads() != null ? request.getThreads() : 5);
         
-        // 执行爬取
+        // Execute crawl
         spider.run();
         
-        // 返回结果
+        // Extract collected data
+        Map<String, Object> extractedData = new HashMap<>();
+        extractedData.put("pageCount", spider.getStatus().getSuccess());
+        extractedData.put("errorCount", spider.getStatus().getError());
+        
+        // Return result
         return new CrawlResult(
             request.getUrl(),
-            spider.getStatus(),
+            spider.getStatus().getName(),
             extractedData
         );
     }
     
     @GetMapping("/status/{jobId}")
     public CrawlStatus getStatus(@PathVariable String jobId) {
-        // 返回爬取任务状态
+        // Return crawl task status
         return crawlStatusService.getStatus(jobId);
     }
 }
