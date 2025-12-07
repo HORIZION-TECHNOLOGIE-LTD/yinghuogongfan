@@ -291,6 +291,10 @@ Fine-tuning the Backend is always desired.
 
 For detailed contribution guidelines, please see our [CONTRIBUTING.md](CONTRIBUTING.md) file.
 
+### Translation Contributions
+
+If you would like to help improve translations or add support for additional languages, please refer to the [TRANSLATIONS.md](TRANSLATIONS.md) file. We also acknowledge the contributions from the [Gitee community translation project](https://gitee.com/mail_osc/translate).
+
 ## Star History
 
 <a href="https://www.star-history.com/#MODSetter/SurfSense&Date">
