@@ -155,22 +155,22 @@ const nextConfig: NextConfig = {
 ## 📖 API Endpoints Reference
 
 ### Authentication
-- `POST /api/auth/register` - Register new user
-- `POST /api/auth/login` - Login and get access token
+- `POST /auth/register` - Register new user
+- `POST /auth/jwt/login` - Login and get access token
 
 ### Research & Chat
-- `POST /api/chat/research` - AI research with citations
-- `POST /api/chat/stream` - Streaming chat
-- `GET /api/spaces` - List knowledge spaces
+- `POST /api/v1/chat` - AI chat with streaming responses
+- `GET /api/v1/searchspaces` - List knowledge spaces
 
 ### Documents
-- `POST /api/documents/upload` - Upload document
-- `GET /api/documents/list` - List documents
-- `DELETE /api/documents/{id}` - Delete document
+- `POST /api/v1/documents/fileupload` - Upload document file
+- `GET /api/v1/documents` - List documents
+- `DELETE /api/v1/documents/{id}` - Delete document
+- `GET /api/v1/documents/search` - Search documents
 
 ### Podcasts
-- `POST /api/podcasts/generate` - Generate podcast
-- `GET /api/podcasts/list` - List podcasts
+- `POST /api/v1/podcasts/generate` - Generate podcast
+- `GET /api/v1/podcasts` - List podcasts
 
 ## 🔐 Authentication Methods
 

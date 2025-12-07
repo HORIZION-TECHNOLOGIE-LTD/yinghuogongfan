@@ -186,52 +186,53 @@ Use SurfSense backend API from your existing application.
 
 **Authentication:**
 ```bash
-POST /api/auth/register
-POST /api/auth/login
+POST /auth/register
+POST /auth/jwt/login
 ```
 
 **Research & Chat:**
 ```bash
-POST /api/chat/research  # AI research with citations
-POST /api/chat/stream    # Streaming chat responses
-GET /api/spaces          # List knowledge spaces
+POST /api/v1/chat         # AI chat with streaming
+GET /api/v1/searchspaces  # List knowledge spaces
 ```
 
 **Document Management:**
 ```bash
-POST /api/documents/upload
-GET /api/documents/list
-DELETE /api/documents/{id}
-POST /api/documents/search
+POST /api/v1/documents            # Create document
+POST /api/v1/documents/fileupload # Upload file
+GET /api/v1/documents             # List documents
+DELETE /api/v1/documents/{id}     # Delete document
+GET /api/v1/documents/search      # Search documents
 ```
 
 **Podcast Generation:**
 ```bash
-POST /api/podcasts/generate
-GET /api/podcasts/list
+POST /api/v1/podcasts/generate    # Generate podcast
+GET /api/v1/podcasts              # List podcasts
 ```
 
 #### Example Integration:
 ```javascript
 // In your BuildingAI application
-async function researchQuery(question, spaceId) {
-    const response = await fetch('https://surfsense.buildingai.com/api/chat/research', {
+async function chatQuery(messages, spaceId) {
+    const response = await fetch('https://surfsense.buildingai.com/api/v1/chat', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${userToken}`
         },
         body: JSON.stringify({
-            question: question,
-            space_id: spaceId,
-            search_settings: {
-                top_k: 10,
-                use_reranker: true
+            messages: messages,
+            data: {
+                searchSpaceId: spaceId,
+                searchMode: 'hybrid',
+                topK: 10,
+                useReranker: true
             }
         })
     });
     
-    return await response.json();
+    return response; // Returns streaming response
 }
 ```
 
