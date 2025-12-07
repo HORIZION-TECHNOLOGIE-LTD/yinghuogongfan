@@ -127,6 +127,17 @@ Open source and easy to deploy locally.
 
 
 
+## 🤖 AI Enhancement with PAL MCP
+
+SurfSense can be enhanced with [PAL MCP (DASHI)](https://github.com/HORIZION-TECHNOLOGIE-LTD/DASHI) - a Provider Abstraction Layer that enables **multi-model AI orchestration**. This optional integration allows you to:
+
+- **Consult multiple AI models** (GPT-5, Gemini Pro, Claude, O3) for better research quality
+- **Get consensus** from different models on complex research topics
+- **Use specialized workflows** like code review, debugging, and extended thinking
+- **Break through context limits** by delegating to models with larger windows (Gemini 1M tokens)
+
+[Learn more about PAL MCP integration →](docs/PAL_MCP_INTEGRATION.md)
+
 ## FEATURE REQUESTS AND FUTURE
 
 

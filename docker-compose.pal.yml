@@ -1,0 +1,105 @@
+# Optional PAL MCP Integration for SurfSense
+# 
+# This docker-compose file adds PAL MCP (DASHI) service to SurfSense
+# for enhanced multi-model AI orchestration capabilities.
+#
+# Usage:
+#   # Start SurfSense with PAL MCP
+#   docker-compose -f docker-compose.yml -f docker-compose.pal.yml up
+#
+#   # Or build with PAL MCP
+#   docker-compose -f docker-compose.yml -f docker-compose.pal.yml up --build
+#
+# For complete setup instructions, see: docs/PAL_MCP_INTEGRATION.md
+
+version: '3.8'
+
+services:
+  pal-mcp:
+    image: beehiveinnovations/pal-mcp-server:latest
+    container_name: surfsense_pal_mcp
+    restart: unless-stopped
+    ports:
+      - "${PAL_MCP_PORT:-8080}:8080"
+    environment:
+      # PAL MCP Core Configuration
+      - LOG_LEVEL=${PAL_LOG_LEVEL:-INFO}
+      - DEFAULT_MODEL=${PAL_DEFAULT_MODEL:-auto}
+      - DEFAULT_THINKING_MODE_THINKDEEP=${PAL_THINKING_MODE:-medium}
+      
+      # Tool Configuration (disable unused tools to save context)
+      - DISABLED_TOOLS=${PAL_DISABLED_TOOLS:-analyze,refactor,testgen,secaudit,docgen,tracer}
+      
+      # API Keys for Multi-Model Support
+      # At least one provider is required for PAL MCP to function
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY:-}
+      - XAI_API_KEY=${XAI_API_KEY:-}
+      - AZURE_API_KEY=${AZURE_API_KEY:-}
+      - AZURE_API_BASE=${AZURE_API_BASE:-}
+      - AZURE_API_VERSION=${AZURE_API_VERSION:-}
+      - DIAL_API_KEY=${DIAL_API_KEY:-}
+      - DIAL_API_BASE=${DIAL_API_BASE:-}
+      
+      # Ollama Local Models (Optional)
+      - OLLAMA_HOST=${OLLAMA_HOST:-}
+      
+      # Performance & Limits
+      - CONVERSATION_TIMEOUT_HOURS=${PAL_CONVERSATION_TIMEOUT:-6}
+      - MAX_CONVERSATION_TURNS=${PAL_MAX_TURNS:-50}
+      - MAX_PROMPT_TOKENS=${PAL_MAX_PROMPT_TOKENS:-25000}
+      - MAX_RESPONSE_TOKENS=${PAL_MAX_RESPONSE_TOKENS:-100000}
+      
+      # Web Search Configuration (Optional)
+      - TAVILY_API_KEY=${TAVILY_API_KEY:-}
+      - SERPER_API_KEY=${SERPER_API_KEY:-}
+      - BRAVE_API_KEY=${BRAVE_API_KEY:-}
+      
+      # MCP Server Configuration
+      - MCP_SERVER_NAME=${PAL_MCP_SERVER_NAME:-pal}
+      - MCP_SERVER_VERSION=${PAL_MCP_VERSION:-latest}
+      
+    volumes:
+      # Persist conversation history (optional)
+      - pal_mcp_data:/app/data
+      
+      # Mount custom configuration if needed
+      # - ./pal-mcp-config:/app/config:ro
+      
+    networks:
+      - surfsense_network
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    
+    # Optional: Limit resources
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '1.0'
+          memory: 1G
+
+volumes:
+  pal_mcp_data:
+    driver: local
+
+networks:
+  surfsense_network:
+    external: true
+    name: ${COMPOSE_PROJECT_NAME:-surfsense}_default
+
+# Notes:
+# 1. Make sure to set required API keys in your .env file
+# 2. PAL MCP requires at least one AI provider (Gemini, OpenAI, etc.)
+# 3. The service will be accessible at http://localhost:${PAL_MCP_PORT}
+# 4. Configure your AI CLI (Claude Code, Cursor, etc.) to connect to this MCP server
+# 5. See docs/PAL_MCP_INTEGRATION.md for detailed configuration and usage
