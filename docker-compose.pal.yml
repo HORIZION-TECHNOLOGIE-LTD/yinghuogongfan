@@ -16,7 +16,13 @@ version: '3.8'
 
 services:
   pal-mcp:
-    image: beehiveinnovations/pal-mcp-server:latest
+    # Note: You'll need to build this image yourself from https://github.com/HORIZION-TECHNOLOGIE-LTD/DASHI
+    # Or use the official image if available: beehiveinnovations/pal-mcp-server:latest
+    build:
+      context: ../DASHI  # Adjust this path if you clone DASHI elsewhere
+      dockerfile: Dockerfile
+    # Alternatively, use pre-built image (if available):
+    # image: beehiveinnovations/pal-mcp-server:latest
     container_name: surfsense_pal_mcp
     restart: unless-stopped
     ports:
@@ -68,9 +74,6 @@ services:
       # Mount custom configuration if needed
       # - ./pal-mcp-config:/app/config:ro
       
-    networks:
-      - surfsense_network
-    
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
       interval: 30s
@@ -92,10 +95,8 @@ volumes:
   pal_mcp_data:
     driver: local
 
-networks:
-  surfsense_network:
-    external: true
-    name: ${COMPOSE_PROJECT_NAME:-surfsense}_default
+# Note: This compose file uses the default network created by the main docker-compose.yml
+# When starting with both files, all services will be on the same network automatically
 
 # Notes:
 # 1. Make sure to set required API keys in your .env file

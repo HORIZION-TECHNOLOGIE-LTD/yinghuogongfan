@@ -34,7 +34,7 @@ Run PAL MCP as a separate service that SurfSense developers and users can connec
 
 ```bash
 # Clone PAL MCP
-git clone https://github.com/BeehiveInnovations/pal-mcp-server.git
+git clone https://github.com/HORIZION-TECHNOLOGIE-LTD/DASHI.git
 cd pal-mcp-server
 
 # Configure with your API keys
@@ -170,13 +170,13 @@ SurfSense already supports multiple LLM providers through LiteLLM. PAL MCP exten
 
 1. **Install PAL MCP** (if not already done):
    ```bash
-   git clone https://github.com/BeehiveInnovations/pal-mcp-server.git
+   git clone https://github.com/HORIZION-TECHNOLOGIE-LTD/DASHI.git
    cd pal-mcp-server
    ./run-server.sh
    ```
 
 2. **Configure your AI CLI** (e.g., Claude Code):
-   Follow PAL MCP's [setup guide](https://github.com/BeehiveInnovations/pal-mcp-server/blob/main/docs/getting-started.md)
+   Follow PAL MCP's [setup guide](https://github.com/HORIZION-TECHNOLOGIE-LTD/DASHI/blob/main/docs/getting-started.md)
 
 3. **Start using with SurfSense**:
    ```
@@ -229,8 +229,8 @@ For production deployments, consider:
 
 ## References
 
-- [PAL MCP GitHub Repository](https://github.com/BeehiveInnovations/pal-mcp-server)
-- [PAL MCP Documentation](https://github.com/BeehiveInnovations/pal-mcp-server/blob/main/docs/index.md)
+- [PAL MCP GitHub Repository](https://github.com/HORIZION-TECHNOLOGIE-LTD/DASHI)
+- [PAL MCP Documentation](https://github.com/HORIZION-TECHNOLOGIE-LTD/DASHI/blob/main/docs/index.md)
 - [Model Context Protocol](https://modelcontextprotocol.com)
 - [SurfSense Documentation](https://www.surfsense.net/docs/)
 

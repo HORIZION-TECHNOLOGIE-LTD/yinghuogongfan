@@ -314,7 +314,7 @@ Result: High-quality implementation with continuous validation
 
 - [PAL MCP Integration Guide](PAL_MCP_INTEGRATION.md)
 - [PAL MCP Quick Reference](PAL_MCP_QUICK_REFERENCE.md)
-- [PAL MCP GitHub](https://github.com/BeehiveInnovations/pal-mcp-server)
+- [PAL MCP GitHub](https://github.com/HORIZION-TECHNOLOGIE-LTD/DASHI)
 - [SurfSense Documentation](https://www.surfsense.net/docs/)
 
 ---

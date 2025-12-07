@@ -146,8 +146,8 @@ real-time search to the research agent"
 ## Resources
 
 - [Full Integration Guide](PAL_MCP_INTEGRATION.md)
-- [PAL MCP Documentation](https://github.com/BeehiveInnovations/pal-mcp-server/blob/main/docs/index.md)
-- [PAL MCP GitHub](https://github.com/BeehiveInnovations/pal-mcp-server)
+- [PAL MCP Documentation](https://github.com/HORIZION-TECHNOLOGIE-LTD/DASHI/blob/main/docs/index.md)
+- [PAL MCP GitHub](https://github.com/HORIZION-TECHNOLOGIE-LTD/DASHI)
 - [SurfSense Documentation](https://www.surfsense.net/docs/)
 
 ## Example Workflows

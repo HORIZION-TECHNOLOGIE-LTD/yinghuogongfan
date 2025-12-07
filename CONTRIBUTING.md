@@ -79,7 +79,7 @@ For advanced contributors, consider using [PAL MCP (DASHI)](docs/PAL_MCP_INTEGRA
 **Quick Setup:**
 ```bash
 # Install PAL MCP
-git clone https://github.com/BeehiveInnovations/pal-mcp-server.git
+git clone https://github.com/HORIZION-TECHNOLOGIE-LTD/DASHI.git
 cd pal-mcp-server && ./run-server.sh
 
 # Or add to SurfSense with Docker Compose
