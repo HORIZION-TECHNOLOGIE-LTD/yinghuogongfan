@@ -68,7 +68,7 @@ export function HeroSection() {
 				</Balancer>
 			</h2>
 			<p className="relative z-50 mx-auto mt-4 max-w-lg px-4 text-center text-base/6 text-gray-600 dark:text-gray-200">
-				Your own private NotebookLM and Perplexity. Integrates with your knowledge base, external sources, and 100+ LLMs. Collaborate with your team in real time.
+				Your own private NotebookLM and Perplexity. Connect 100+ LLMs to your knowledge base, external sources, and collaborate with your team in real time.
 			</p>
 			<div className="mb-10 mt-8 flex w-full flex-col items-center justify-center gap-4 px-8 sm:flex-row md:mb-20">
 				<Link
