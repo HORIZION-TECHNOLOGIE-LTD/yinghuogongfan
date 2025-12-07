@@ -187,6 +187,18 @@ public class SurfSenseCrawler implements PageProcessor {
 ### Spring Boot WebMagic 服务 | Spring Boot WebMagic Service
 
 ```java
+// Required imports
+import org.springframework.web.bind.annotation.*;
+import us.codecraft.webmagic.Page;
+import us.codecraft.webmagic.Site;
+import us.codecraft.webmagic.Spider;
+import us.codecraft.webmagic.Task;
+import us.codecraft.webmagic.ResultItems;
+import us.codecraft.webmagic.pipeline.Pipeline;
+import us.codecraft.webmagic.processor.PageProcessor;
+
+import java.util.*;
+
 // Request and Response DTOs
 public class CrawlRequest {
     private String url;
@@ -503,6 +515,10 @@ Site site = Site.me()
 ### 3. IP 轮换 | IP Rotation
 
 ```java
+import org.apache.http.HttpHost;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+
 // Implement custom proxy rotation
 public class ProxyProvider {
     private List<HttpHost> proxies;
@@ -535,6 +551,10 @@ Site site = Site.me()
 ### 1. 爬取统计 | Crawl Statistics
 
 ```java
+import us.codecraft.webmagic.*;
+import us.codecraft.webmagic.pipeline.*;
+import java.util.concurrent.atomic.AtomicInteger;
+
 Spider spider = Spider.create(new MyPageProcessor())
     .addUrl("https://example.com")
     .addPipeline(new ConsolePipeline())
@@ -688,8 +708,20 @@ Spider.create(new MyPageProcessor())
 最佳实践是根据场景选择：
 
 ```python
-async def crawl_url_smart(url: str, search_space_id: int, user_id: str):
-    """智能选择爬虫方案"""
+# Example: Smart crawler selection in SurfSense backend
+from app.tasks.document_processors.url_crawler import add_crawled_url_document
+
+async def crawl_url_smart(url: str, session: AsyncSession, search_space_id: int, user_id: str):
+    """智能选择爬虫方案 | Smart crawler selection"""
+    
+    # Helper function to determine if large-scale crawling is needed
+    def is_large_scale_task(url: str) -> bool:
+        # Example logic: check if URL requires deep crawling
+        # This is a placeholder - implement based on your needs
+        return "site-to-crawl-deeply.com" in url
+    
+    # Initialize WebMagic client (configuration needed)
+    webmagic_client = WebMagicClient(base_url="http://webmagic-service:8080")
     
     # 判断是否为大规模任务
     if is_large_scale_task(url):
