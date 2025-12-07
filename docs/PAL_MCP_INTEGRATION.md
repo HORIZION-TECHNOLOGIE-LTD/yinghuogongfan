@@ -35,7 +35,7 @@ Run PAL MCP as a separate service that SurfSense developers and users can connec
 ```bash
 # Clone PAL MCP
 git clone https://github.com/HORIZION-TECHNOLOGIE-LTD/DASHI.git
-cd pal-mcp-server
+cd DASHI
 
 # Configure with your API keys
 cp .env.example .env
@@ -64,7 +64,16 @@ Add PAL MCP as an optional service in SurfSense's docker-compose.yml for integra
 - Easy startup/shutdown
 
 **Implementation:**
-See the example configuration in `docker-compose.pal.yml` (to be added)
+See the example configuration in `docker-compose.pal.yml` included in this repository.
+
+**Usage:**
+```bash
+# Start SurfSense with PAL MCP
+docker-compose -f docker-compose.yml -f docker-compose.pal.yml up
+
+# Or build with PAL MCP
+docker-compose -f docker-compose.yml -f docker-compose.pal.yml up --build
+```
 
 ### Option 3: Direct Integration (Advanced)
 
@@ -171,7 +180,7 @@ SurfSense already supports multiple LLM providers through LiteLLM. PAL MCP exten
 1. **Install PAL MCP** (if not already done):
    ```bash
    git clone https://github.com/HORIZION-TECHNOLOGIE-LTD/DASHI.git
-   cd pal-mcp-server
+   cd DASHI
    ./run-server.sh
    ```
 

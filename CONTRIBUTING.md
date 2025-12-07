@@ -80,7 +80,7 @@ For advanced contributors, consider using [PAL MCP (DASHI)](docs/PAL_MCP_INTEGRA
 ```bash
 # Install PAL MCP
 git clone https://github.com/HORIZION-TECHNOLOGIE-LTD/DASHI.git
-cd pal-mcp-server && ./run-server.sh
+cd DASHI && ./run-server.sh
 
 # Or add to SurfSense with Docker Compose
 docker-compose -f docker-compose.yml -f docker-compose.pal.yml up
