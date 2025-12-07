@@ -254,9 +254,6 @@ class CustomPageProcessor implements PageProcessor {
 @RequestMapping("/api/crawler")
 public class WebMagicController {
     
-    // Store to track crawl results (In production, use Redis or database)
-    private Map<String, ResultItems> resultStore = new ConcurrentHashMap<>();
-    
     @PostMapping("/crawl")
     public CrawlResult crawlUrl(@RequestBody CrawlRequest request) {
         // Create result items collector
@@ -292,7 +289,9 @@ class ResultItemsCollectorPipeline implements Pipeline {
     
     @Override
     public void process(ResultItems resultItems, Task task) {
-        results.add(resultItems);
+        if (!resultItems.isSkip()) {
+            results.add(resultItems);
+        }
     }
     
     public List<ResultItems> getResults() {
@@ -467,10 +466,29 @@ String date = page.getHtml()
 ### 1. Robots.txt 遵守 | Robots.txt Compliance
 
 ```java
-// 检查 robots.txt
+// WebMagic doesn't have built-in robots.txt support
+// Use crawler-commons library for robots.txt checking
+// Add dependency:
+// <dependency>
+//     <groupId>com.github.crawler-commons</groupId>
+//     <artifactId>crawler-commons</artifactId>
+//     <version>1.2</version>
+// </dependency>
+
+import crawlercommons.robots.SimpleRobotRules;
+import crawlercommons.robots.SimpleRobotRulesParser;
+
 public boolean isAllowed(String url) {
-    RobotsTxtReader reader = new RobotsTxtReader();
-    return reader.isAllowed("SurfSense Bot", url);
+    SimpleRobotRulesParser parser = new SimpleRobotRulesParser();
+    // Fetch and parse robots.txt
+    // Check if URL is allowed for the user-agent
+    SimpleRobotRules rules = parser.parseContent(
+        url, 
+        robotsTxtContent, 
+        "text/plain", 
+        "SurfSense Bot"
+    );
+    return rules.isAllowed(url);
 }
 ```
 
@@ -485,10 +503,29 @@ Site site = Site.me()
 ### 3. IP 轮换 | IP Rotation
 
 ```java
-// 使用代理池
-ProxyPool proxyPool = new ProxyPool();
+// Implement custom proxy rotation
+public class ProxyProvider {
+    private List<HttpHost> proxies;
+    private AtomicInteger counter = new AtomicInteger(0);
+    
+    public ProxyProvider(List<HttpHost> proxies) {
+        this.proxies = proxies;
+    }
+    
+    public HttpHost getNextProxy() {
+        int index = counter.getAndIncrement() % proxies.size();
+        return proxies.get(index);
+    }
+}
+
+// Use in Site configuration
+ProxyProvider proxyProvider = new ProxyProvider(Arrays.asList(
+    new HttpHost("proxy1.example.com", 8080),
+    new HttpHost("proxy2.example.com", 8080)
+));
+
 Site site = Site.me()
-    .setHttpProxyPool(proxyPool.getProxies());
+    .setHttpProxy(proxyProvider.getNextProxy());
 ```
 
 ---
@@ -505,10 +542,37 @@ Spider spider = Spider.create(new MyPageProcessor())
 
 spider.run();
 
-// 获取统计信息
-SpiderStatus status = spider.getStatus();
-System.out.println("成功: " + status.getSuccess());
-System.out.println("失败: " + status.getError());
+// WebMagic doesn't provide built-in detailed statistics
+// Implement custom statistics tracking using Pipeline
+class StatisticsPipeline implements Pipeline {
+    private AtomicInteger successCount = new AtomicInteger(0);
+    private AtomicInteger errorCount = new AtomicInteger(0);
+    
+    @Override
+    public void process(ResultItems resultItems, Task task) {
+        if (resultItems.isSkip()) {
+            errorCount.incrementAndGet();
+        } else {
+            successCount.incrementAndGet();
+        }
+    }
+    
+    public int getSuccessCount() {
+        return successCount.get();
+    }
+    
+    public int getErrorCount() {
+        return errorCount.get();
+    }
+}
+
+// Usage
+StatisticsPipeline stats = new StatisticsPipeline();
+spider.addPipeline(stats);
+spider.run();
+
+System.out.println("成功: " + stats.getSuccessCount());
+System.out.println("失败: " + stats.getErrorCount());
 ```
 
 ### 2. 日志配置 | Logging Configuration
@@ -558,12 +622,15 @@ Site site = Site.me()
 
 #### 4. **内存溢出 | Out of Memory**
 ```java
-// 限制队列大小
+// Use BloomFilterDuplicateRemover for memory-efficient duplicate detection
 Spider.create(new MyPageProcessor())
     .setScheduler(new QueueScheduler()
-        .setDuplicateRemover(new BloomFilterDuplicateRemover(10000000)))
+        .setDuplicateRemover(new BloomFilterDuplicateRemover()))
     .thread(5)
     .run();
+
+// Or adjust JVM heap size
+// java -Xmx2g -jar webmagic-crawler.jar
 ```
 
 ---
