@@ -1,7 +1,6 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useEffect, useRef } from "react";
 import "grapesjs/dist/css/grapes.min.css";
 
 // Dynamically import GrapesJS to avoid SSR issues

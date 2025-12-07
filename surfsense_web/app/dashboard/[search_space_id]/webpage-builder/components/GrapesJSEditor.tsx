@@ -1,17 +1,18 @@
 "use client";
 
-import grapesjs from "grapesjs";
+import type grapesjs from "grapesjs";
+import grapesjsLib from "grapesjs";
 import { useEffect, useRef } from "react";
 
 export default function GrapesJSEditor() {
 	const editorRef = useRef<HTMLDivElement>(null);
-	const editorInstance = useRef<any>(null);
+	const editorInstance = useRef<grapesjs.Editor | null>(null);
 
 	useEffect(() => {
 		if (!editorRef.current || editorInstance.current) return;
 
 		// Initialize GrapesJS
-		editorInstance.current = grapesjs.init({
+		editorInstance.current = grapesjsLib.init({
 			container: editorRef.current,
 			height: "100vh",
 			width: "auto",
@@ -34,7 +35,7 @@ export default function GrapesJSEditor() {
 								id: "visibility",
 								active: true,
 								className: "btn-toggle-borders",
-								label: '<i class="fa fa-clone"></i>',
+								label: "👁",
 								command: "sw-visibility",
 							},
 						],
@@ -45,20 +46,20 @@ export default function GrapesJSEditor() {
 						buttons: [
 							{
 								id: "device-desktop",
-								label: '<i class="fa fa-desktop"></i>',
+								label: "🖥️",
 								command: "set-device-desktop",
 								active: true,
 								togglable: false,
 							},
 							{
 								id: "device-tablet",
-								label: '<i class="fa fa-tablet"></i>',
+								label: "📱",
 								command: "set-device-tablet",
 								togglable: false,
 							},
 							{
 								id: "device-mobile",
-								label: '<i class="fa fa-mobile"></i>',
+								label: "📱",
 								command: "set-device-mobile",
 								togglable: false,
 							},
@@ -148,7 +149,7 @@ export default function GrapesJSEditor() {
 						label: "Video",
 						content: {
 							type: "video",
-							src: "https://www.youtube.com/embed/jNQXAC9IVRw",
+							src: "",
 						},
 					},
 					{
@@ -172,31 +173,31 @@ export default function GrapesJSEditor() {
 		const commands = editorInstance.current.Commands;
 
 		commands.add("set-device-desktop", {
-			run: (editor: any) => editor.setDevice("Desktop"),
+			run: (editor: grapesjs.Editor) => editor.setDevice("Desktop"),
 		});
 		commands.add("set-device-tablet", {
-			run: (editor: any) => editor.setDevice("Tablet"),
+			run: (editor: grapesjs.Editor) => editor.setDevice("Tablet"),
 		});
 		commands.add("set-device-mobile", {
-			run: (editor: any) => editor.setDevice("Mobile"),
+			run: (editor: grapesjs.Editor) => editor.setDevice("Mobile"),
 		});
 		commands.add("show-layers", {
-			run(editor: any) {
+			run(editor: grapesjs.Editor) {
 				editor.LayerManager.render();
 			},
 		});
 		commands.add("show-styles", {
-			run(editor: any) {
+			run(editor: grapesjs.Editor) {
 				editor.StyleManager.render();
 			},
 		});
 		commands.add("show-traits", {
-			run(editor: any) {
+			run(editor: grapesjs.Editor) {
 				editor.TraitManager.render();
 			},
 		});
 		commands.add("show-blocks", {
-			run(editor: any) {
+			run(editor: grapesjs.Editor) {
 				editor.BlockManager.render();
 			},
 		});
@@ -212,7 +213,7 @@ export default function GrapesJSEditor() {
 	return (
 		<div className="w-full h-full">
 			<div className="flex h-full">
-				<div className="flex flex-col bg-background border-r" style={{ width: "250px" }}>
+				<div className="flex flex-col bg-background border-r w-[250px]">
 					<div className="p-2 border-b">
 						<h3 className="font-semibold text-sm">Blocks</h3>
 					</div>
