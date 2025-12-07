@@ -52,7 +52,7 @@ export default function WebpageEditor({
 			pluginsOpts: {
 				[websitePreset]: {
 					// Preset-webpage plugin options
-					blocks: ["link-block", "quote", "text-basic"],
+					// Note: Not restricting blocks to enable all preset-webpage components
 					modalImportTitle: "Import Template",
 					modalImportLabel:
 						'<div style="margin-bottom: 10px; font-size: 13px;">Paste here your HTML/CSS and click Import</div>',

@@ -23,6 +23,11 @@ export default function WebpageEditorDemo() {
 	};
 
 	const handleExport = () => {
+		// Note: This export is intended for user-generated content from the editor.
+		// In a production environment, consider:
+		// 1. Sanitizing content with DOMPurify before export if content comes from untrusted sources
+		// 2. Implementing server-side validation
+		// 3. Adding CSP headers when serving exported HTML
 		const fullHtml = `<!DOCTYPE html>
 <html>
 <head>

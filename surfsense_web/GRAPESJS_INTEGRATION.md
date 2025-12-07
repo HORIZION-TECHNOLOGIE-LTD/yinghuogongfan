@@ -28,6 +28,30 @@ The following packages have been installed:
 
 ✅ **Security Check Passed**: No vulnerabilities found in GrapesJS or preset-webpage packages.
 
+### Important Security Considerations
+
+When using the WebpageEditor component in production:
+
+1. **Content Sanitization**: If users can share or publish their created webpages, consider sanitizing the HTML output with a library like DOMPurify to prevent XSS attacks.
+
+2. **Server-Side Validation**: Validate exported content on the server before storing or serving it to other users.
+
+3. **CSP Headers**: When serving exported HTML, implement Content Security Policy headers to restrict script execution.
+
+4. **Trusted Users Only**: The demo export functionality is designed for trusted user scenarios. If implementing multi-tenant or public-facing features, add appropriate safeguards.
+
+Example sanitization with DOMPurify:
+
+```typescript
+import DOMPurify from "isomorphic-dompurify";
+
+const handleExport = () => {
+  const sanitizedHtml = DOMPurify.sanitize(htmlContent);
+  const sanitizedCss = DOMPurify.sanitize(cssContent);
+  // ... rest of export logic
+};
+```
+
 ## Components
 
 ### WebpageEditor Component
