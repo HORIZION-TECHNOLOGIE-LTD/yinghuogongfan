@@ -13,8 +13,8 @@ export const scrollToBottom = (ref: RefObject<HTMLDivElement>) => {
 export const useScrollToBottom = (ref: RefObject<HTMLDivElement>, dependencies: unknown[]) => {
 	useEffect(() => {
 		scrollToBottom(ref);
-	// Dependencies array is intentionally passed dynamically
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// Dependencies array is intentionally passed dynamically
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [...dependencies, ref]);
 };
 
@@ -41,8 +41,8 @@ export const useScrollIndicators = (
 	setCanScrollLeft: (value: boolean) => void,
 	setCanScrollRight: (value: boolean) => void
 ) => {
-	const updateIndicators = useCallback(() =>
-		updateScrollIndicators(tabsListRef, setCanScrollLeft, setCanScrollRight),
+	const updateIndicators = useCallback(
+		() => updateScrollIndicators(tabsListRef, setCanScrollLeft, setCanScrollRight),
 		[tabsListRef, setCanScrollLeft, setCanScrollRight]
 	);
 
