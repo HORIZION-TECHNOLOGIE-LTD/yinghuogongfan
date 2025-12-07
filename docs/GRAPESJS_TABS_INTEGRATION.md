@@ -34,6 +34,20 @@ npm install --legacy-peer-deps
 
 Note: `--legacy-peer-deps` flag is used due to React 19 being newer than some peer dependencies expect.
 
+## Demo Page
+
+A demo page has been created at `/app/grapesjs-demo/page.tsx`. Access it at:
+
+```
+http://localhost:3000/grapesjs-demo
+```
+
+This page demonstrates the GrapesJS editor with the tabs plugin. You can:
+1. Drag the "Tabs" block from the left panel into the canvas
+2. Click on individual tabs to edit their content
+3. Use the right panel to style the tabs
+4. Switch between Desktop/Tablet/Mobile views
+
 ## Basic Usage
 
 When GrapesJS is integrated into the application, the tabs plugin can be used as follows:
