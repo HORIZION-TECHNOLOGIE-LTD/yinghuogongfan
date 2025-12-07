@@ -1,6 +1,6 @@
 # 快速参考 - 开发指南
 
-## 📚 文档导航（11份文档）
+## 📚 文档导航（12份文档）
 
 ### 🎯 开始开发前必读
 
@@ -31,28 +31,36 @@
    - 包含：问答生成（第63行）、思维导图（第167行）
    - 不要整体集成，只提取功能
 
+### 🗄️ 数据库部署
+
+6. **[Azure数据库集成](AZURE_DATABASE_INTEGRATION_CN.md)** ⭐⭐⭐
+   - 🗄️ Azure免费数据库分析
+   - 为什么选PostgreSQL
+   - 30分钟快速迁移指南
+
+7. **[ARM模板部署指南](AZURE_ARM_TEMPLATE_GUIDE_CN.md)** ⭐⭐⭐
+   - 📦 用户ARM模板完整说明
+   - 3种部署方法（Portal/CLI/PowerShell）
+   - 部署后配置步骤
+   - 5-10分钟完成部署
+
 ### 📖 分析和参考
 
-6. **[架构分析](ARCHITECTURE_AND_INTEGRATION_GUIDE_CN.md)** ⭐⭐
+8. **[架构分析](ARCHITECTURE_AND_INTEGRATION_GUIDE_CN.md)** ⭐⭐
    - 🏗️ 技术栈详解
    - 包含：前后端分析、DingAI集成方案
 
-7. **[功能差距分析](FEATURE_GAP_ANALYSIS_CN.md)** ⭐⭐
+9. **[功能差距分析](FEATURE_GAP_ANALYSIS_CN.md)** ⭐⭐
    - 🎯 缺什么功能
    - 包含：与竞品对比、实施建议
 
-8. **[背景和图片裁剪](BACKGROUND_AND_IMAGE_CROPPING.md)** ⭐
-   - ✅ 已完成功能的使用指南
-   - 英文文档
+10. **[背景和图片裁剪](BACKGROUND_AND_IMAGE_CROPPING.md)** ⭐
+    - ✅ 已完成功能的使用指南
+    - 英文文档
 
-9. **[实现总结](IMPLEMENTATION_SUMMARY.md)** ⭐
-   - ✅ 已完成工作总结
-   - 英文文档
-
-10. **[Azure数据库集成](AZURE_DATABASE_INTEGRATION_CN.md)** ⭐⭐
-    - 🗄️ Azure免费数据库分析
-    - PostgreSQL迁移指南
-    - 30分钟完成迁移
+11. **[实现总结](IMPLEMENTATION_SUMMARY.md)** ⭐
+    - ✅ 已完成工作总结
+    - 英文文档
 
 ---
 
@@ -107,9 +115,10 @@ cd surfsense_web
 - 背景片段组件库（24个图案）
 - 图片裁剪功能（完整工作流）
 - Demo 页面（/demo）
-- 9份完整文档
+- 12份完整文档（包含ARM模板部署指南）
 
 ### 待实施 📅
+- **Today**: Azure PostgreSQL 部署（5-10分钟，使用ARM模板）
 - **Week 1-2**: AI 文案 + 模板库
 - **Week 3-6**: GrapesJS 网站生成器
 - **Week 7-8**: AI 图像生成
@@ -310,17 +319,22 @@ surfsense_backend/app/agents/
 
 ## 🌟 最后提醒
 
-**9份文档的作用**：
+**12份文档的作用**：
 1. **路线图** - 大局观
 2. **进度表** - 日常任务
 3. **快速集成** - 立即可用代码
 4. **GrapesJS** - 网站生成器
 5. **NotebookLlama** - 功能提取
-6-9. 其他 - 参考和分析
+6. **Azure数据库集成** - 数据库选型分析
+7. **ARM模板部署** - 数据库快速部署
+8-12. 其他 - 参考和分析
 
 **开发时只需要**：
 - 进度表（任务清单）
 - 对应的详细文档（代码）
+
+**数据库部署只需要**：
+- ARM模板部署指南（5-10分钟完成）
 
 **记住**：
 - 所有代码都准备好了
@@ -328,4 +342,6 @@ surfsense_backend/app/agents/
 - 不会忘记任何任务
 - 即使断线也能继续
 
-🚀 **开始开发吧！从 AI 文案生成器开始，1小时可见效！**
+🚀 **立即行动**：
+1. 今天：部署 Azure PostgreSQL（5-10分钟）
+2. 明天：AI 文案生成器（1小时可见效）
