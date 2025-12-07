@@ -50,14 +50,43 @@ At minimum, you need ONE of the following file processing services:
 
 ## Quick Start with Docker (Recommended)
 
-### 1. Clone the Repository
+### Automated Setup (Easiest)
+
+We provide quick-start scripts to automate the initial setup:
+
+**Linux/macOS:**
+```bash
+git clone https://github.com/HORIZION-TECHNOLOGIE-LTD/yinghuogongfan.git
+cd yinghuogongfan
+./quick-start.sh
+```
+
+**Windows:**
+```cmd
+git clone https://github.com/HORIZION-TECHNOLOGIE-LTD/yinghuogongfan.git
+cd yinghuogongfan
+quick-start.bat
+```
+
+The script will:
+- Create all necessary `.env` files from examples
+- Generate a secure PostgreSQL password
+- Provide next steps for configuration
+
+After running the script, follow the displayed instructions to add your API keys and start the services.
+
+### Manual Setup
+
+If you prefer to set up manually:
+
+#### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/HORIZION-TECHNOLOGIE-LTD/yinghuogongfan.git
 cd yinghuogongfan
 ```
 
-### 2. Configure Environment Variables
+#### 2. Configure Environment Variables
 
 Create a `.env` file in the root directory:
 
@@ -78,7 +107,7 @@ BACKEND_PORT=8000
 POSTGRES_PORT=5432
 ```
 
-### 3. Configure Backend
+#### 3. Configure Backend
 
 Navigate to the backend directory and set up configuration:
 
@@ -106,7 +135,7 @@ OPENAI_API_KEY=your_openai_key
 # LLAMA_CLOUD_API_KEY=your_llama_key
 ```
 
-### 4. Configure Frontend
+#### 4. Configure Frontend
 
 Navigate to the frontend directory:
 
@@ -115,7 +144,7 @@ cd ../surfsense_web
 cp .env.example .env
 ```
 
-### 5. Start the Services
+#### 5. Start the Services
 
 Return to the root directory and start all services:
 
@@ -131,13 +160,13 @@ This will start:
 - Backend API (port 8000)
 - Frontend Web UI (port 3000)
 
-### 6. Access SurfSense
+#### 6. Access SurfSense
 
 - **Web UI**: http://localhost:3000
 - **API Documentation**: http://localhost:8000/docs
 - **pgAdmin**: http://localhost:5050 (admin@surfsense.com / surfsense)
 
-### 7. Initialize the Database
+#### 7. Initialize the Database
 
 The database will be initialized automatically on first run. If needed, you can run migrations manually:
 

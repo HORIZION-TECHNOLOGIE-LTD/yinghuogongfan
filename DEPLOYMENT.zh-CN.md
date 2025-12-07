@@ -50,14 +50,43 @@
 
 ## 使用 Docker 快速开始（推荐）
 
-### 1. 克隆仓库
+### 自动化设置（最简单）
+
+我们提供快速启动脚本来自动化初始设置：
+
+**Linux/macOS:**
+```bash
+git clone https://github.com/HORIZION-TECHNOLOGIE-LTD/yinghuogongfan.git
+cd yinghuogongfan
+./quick-start.sh
+```
+
+**Windows:**
+```cmd
+git clone https://github.com/HORIZION-TECHNOLOGIE-LTD/yinghuogongfan.git
+cd yinghuogongfan
+quick-start.bat
+```
+
+该脚本将：
+- 从示例创建所有必要的 `.env` 文件
+- 生成安全的 PostgreSQL 密码
+- 提供配置的后续步骤
+
+运行脚本后，按照显示的说明添加您的 API 密钥并启动服务。
+
+### 手动设置
+
+如果您更喜欢手动设置：
+
+#### 1. 克隆仓库
 
 ```bash
 git clone https://github.com/HORIZION-TECHNOLOGIE-LTD/yinghuogongfan.git
 cd yinghuogongfan
 ```
 
-### 2. 配置环境变量
+#### 2. 配置环境变量
 
 在根目录创建 `.env` 文件：
 
@@ -78,7 +107,7 @@ BACKEND_PORT=8000
 POSTGRES_PORT=5432
 ```
 
-### 3. 配置后端
+#### 3. 配置后端
 
 导航到后端目录并设置配置：
 
@@ -106,7 +135,7 @@ OPENAI_API_KEY=your_openai_key
 # LLAMA_CLOUD_API_KEY=your_llama_key
 ```
 
-### 4. 配置前端
+#### 4. 配置前端
 
 导航到前端目录：
 
@@ -115,7 +144,7 @@ cd ../surfsense_web
 cp .env.example .env
 ```
 
-### 5. 启动服务
+#### 5. 启动服务
 
 返回根目录并启动所有服务：
 
@@ -131,13 +160,13 @@ docker-compose up -d
 - 后端 API（端口 8000）
 - 前端 Web UI（端口 3000）
 
-### 6. 访问 SurfSense
+#### 6. 访问 SurfSense
 
 - **Web UI**：http://localhost:3000
 - **API 文档**：http://localhost:8000/docs
 - **pgAdmin**：http://localhost:5050（admin@surfsense.com / surfsense）
 
-### 7. 初始化数据库
+#### 7. 初始化数据库
 
 数据库将在首次运行时自动初始化。如需要，可以手动运行迁移：
 
