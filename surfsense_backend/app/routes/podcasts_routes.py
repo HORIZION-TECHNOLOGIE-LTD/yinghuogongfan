@@ -222,6 +222,45 @@ async def generate_podcast(
                     request.user_prompt,
                 )
 
+        elif request.type == "DOCUMENT":
+            # Verify that all document IDs belong to this user and search space
+            from app.db import Document
+
+            query = (
+                select(Document)
+                .filter(
+                    Document.id.in_(request.ids),
+                    Document.search_space_id == request.search_space_id,
+                )
+                .join(SearchSpace)
+                .filter(SearchSpace.user_id == user.id)
+            )
+
+            result = await session.execute(query)
+            valid_documents = result.scalars().all()
+            valid_document_ids = [doc.id for doc in valid_documents]
+
+            # If any requested ID is not in valid IDs, raise error immediately
+            if len(valid_document_ids) != len(request.ids):
+                raise HTTPException(
+                    status_code=403,
+                    detail="One or more document IDs do not belong to this user or search space",
+                )
+
+            from app.tasks.celery_tasks.podcast_tasks import (
+                generate_document_podcast_task,
+            )
+
+            # Add Celery tasks for each document ID
+            for document_id in valid_document_ids:
+                generate_document_podcast_task.delay(
+                    document_id,
+                    request.search_space_id,
+                    user.id,
+                    request.podcast_title,
+                    request.user_prompt,
+                )
+
         return {
             "message": "Podcast generation started",
         }

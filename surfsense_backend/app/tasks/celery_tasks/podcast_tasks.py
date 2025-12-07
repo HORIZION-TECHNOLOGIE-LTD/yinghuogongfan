@@ -9,7 +9,7 @@ from sqlalchemy.pool import NullPool
 
 from app.celery_app import celery_app
 from app.config import config
-from app.tasks.podcast_tasks import generate_chat_podcast
+from app.tasks.podcast_tasks import generate_chat_podcast, generate_document_podcast
 
 logger = logging.getLogger(__name__)
 
@@ -85,4 +85,61 @@ async def _generate_chat_podcast(
             )
         except Exception as e:
             logger.error(f"Error generating podcast from chat: {e!s}")
+            raise
+
+
+@celery_app.task(name="generate_document_podcast", bind=True)
+def generate_document_podcast_task(
+    self,
+    document_id: int,
+    search_space_id: int,
+    user_id: int,
+    podcast_title: str | None = None,
+    user_prompt: str | None = None,
+):
+    """
+    Celery task to generate podcast from document.
+
+    Args:
+        document_id: ID of the document to generate podcast from
+        search_space_id: ID of the search space
+        user_id: ID of the user
+        podcast_title: Title for the podcast
+        user_prompt: Optional prompt from the user to guide the podcast generation
+    """
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+
+    try:
+        loop.run_until_complete(
+            _generate_document_podcast(
+                document_id, search_space_id, user_id, podcast_title, user_prompt
+            )
+        )
+        loop.run_until_complete(loop.shutdown_asyncgens())
+    finally:
+        asyncio.set_event_loop(None)
+        loop.close()
+
+
+async def _generate_document_podcast(
+    document_id: int,
+    search_space_id: int,
+    user_id: int,
+    podcast_title: str | None = None,
+    user_prompt: str | None = None,
+):
+    """Generate document podcast with new session."""
+    async with get_celery_session_maker()() as session:
+        try:
+            await generate_document_podcast(
+                session,
+                document_id,
+                search_space_id,
+                user_id,
+                podcast_title,
+                user_prompt,
+            )
+        except Exception as e:
+            logger.error(f"Error generating podcast from document: {e!s}")
             raise
