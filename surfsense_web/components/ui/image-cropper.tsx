@@ -87,7 +87,10 @@ export function ImageCropper({
 			const croppedImage = await getCroppedImg(image, croppedAreaPixels);
 			onCropComplete(croppedImage);
 		} catch (error) {
-			console.error("Error cropping image:", error);
+			// Error handling - consider integrating with application's error reporting
+			const errorMessage = error instanceof Error ? error.message : "Failed to crop image";
+			console.error("Error cropping image:", errorMessage);
+			// You could add toast notification here if available in parent component
 		} finally {
 			setIsProcessing(false);
 		}

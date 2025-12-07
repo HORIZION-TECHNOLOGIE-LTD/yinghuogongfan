@@ -4,6 +4,7 @@ import { Crop, Upload, X } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ImageCropper } from "@/components/ui/image-cropper";
@@ -31,7 +32,9 @@ export function ImageUploadWithCrop({
 				const maxSize = maxSizeMB * 1024 * 1024;
 
 				if (file.size > maxSize) {
-					alert(`File size exceeds ${maxSizeMB}MB limit`);
+					toast.error("File too large", {
+						description: `File size exceeds ${maxSizeMB}MB limit`,
+					});
 					return;
 				}
 
