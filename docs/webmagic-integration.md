@@ -193,7 +193,13 @@ public class CrawlRequest {
     private Integer threads;
     private Integer depth;
     
-    // Getters and setters omitted for brevity
+    // Getters and setters
+    public String getUrl() { return url; }
+    public void setUrl(String url) { this.url = url; }
+    public Integer getThreads() { return threads; }
+    public void setThreads(Integer threads) { this.threads = threads; }
+    public Integer getDepth() { return depth; }
+    public void setDepth(Integer depth) { this.depth = depth; }
 }
 
 public class CrawlResult {
@@ -207,7 +213,13 @@ public class CrawlResult {
         this.data = data;
     }
     
-    // Getters and setters omitted for brevity
+    // Getters and setters
+    public String getUrl() { return url; }
+    public void setUrl(String url) { this.url = url; }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
+    public Map<String, Object> getData() { return data; }
+    public void setData(Map<String, Object> data) { this.data = data; }
 }
 
 // Custom PageProcessor implementation
@@ -242,15 +254,19 @@ class CustomPageProcessor implements PageProcessor {
 @RequestMapping("/api/crawler")
 public class WebMagicController {
     
-    @Autowired
-    private CrawlStatusService crawlStatusService;
+    // Store to track crawl results (In production, use Redis or database)
+    private Map<String, ResultItems> resultStore = new ConcurrentHashMap<>();
     
     @PostMapping("/crawl")
     public CrawlResult crawlUrl(@RequestBody CrawlRequest request) {
+        // Create result items collector
+        ResultItemsCollectorPipeline collector = new ResultItemsCollectorPipeline();
+        
         // Create spider instance
         CustomPageProcessor processor = new CustomPageProcessor(request);
         Spider spider = Spider.create(processor)
                 .addUrl(request.getUrl())
+                .addPipeline(collector)
                 .thread(request.getThreads() != null ? request.getThreads() : 5);
         
         // Execute crawl
@@ -258,21 +274,29 @@ public class WebMagicController {
         
         // Extract collected data
         Map<String, Object> extractedData = new HashMap<>();
-        extractedData.put("pageCount", spider.getStatus().getSuccess());
-        extractedData.put("errorCount", spider.getStatus().getError());
+        extractedData.put("pageCount", collector.getResults().size());
+        extractedData.put("items", collector.getResults());
         
         // Return result
         return new CrawlResult(
             request.getUrl(),
-            spider.getStatus().getName(),
+            "completed",
             extractedData
         );
     }
+}
+
+// Helper class to collect results
+class ResultItemsCollectorPipeline implements Pipeline {
+    private List<ResultItems> results = new ArrayList<>();
     
-    @GetMapping("/status/{jobId}")
-    public CrawlStatus getStatus(@PathVariable String jobId) {
-        // Return crawl task status
-        return crawlStatusService.getStatus(jobId);
+    @Override
+    public void process(ResultItems resultItems, Task task) {
+        results.add(resultItems);
+    }
+    
+    public List<ResultItems> getResults() {
+        return results;
     }
 }
 ```
