@@ -16,6 +16,15 @@
 
 CrewAI 是一个强大的 AI 代理协作框架，专注于多代理工作流和自动化。
 
+### 官方文档资源
+
+**推荐访问官方文档获取最新信息：**
+- 📚 [CrewAI 官方文档](https://docs.crewai.com/)
+- 💻 [示例代码库](https://github.com/crewAIInc/crewAI-examples)
+- 🌟 [GitHub 主仓库](https://github.com/crewAIInc/crewAI)
+- 🎓 [教程和指南](https://docs.crewai.com/how-to/Creating-a-Crew-and-kick-it-off/)
+- 🔧 [API 参考](https://docs.crewai.com/core-concepts/Agents/)
+
 ### 用例列表
 
 | 用例 | 行业 | 描述 | GitHub |
@@ -48,6 +57,26 @@ CrewAI 是一个强大的 AI 代理协作框架，专注于多代理工作流和
 ## Autogen 框架
 
 Autogen 是微软开发的多代理对话框架，支持复杂的代理协作和自动化工作流程。
+
+### 官方文档资源
+
+**强烈推荐访问官方文档获取最全面的信息：**
+- 📚 [AutoGen 官方文档（稳定版）](https://microsoft.github.io/autogen/stable/)
+- 📖 [AutoGen 0.2 文档](https://microsoft.github.io/autogen/0.2/)
+- 💻 [代码示例和教程](https://microsoft.github.io/autogen/0.2/docs/notebooks/)
+- 🔧 [自定义群聊教程](https://microsoft.github.io/autogen/0.2/docs/notebooks/agentchat_groupchat_customized/)
+- 🌟 [GitHub 仓库](https://github.com/microsoft/autogen)
+- 🚀 [快速入门指南](https://microsoft.github.io/autogen/stable/docs/Getting-Started)
+- 📘 [用户指南](https://microsoft.github.io/autogen/stable/docs/user-guide/index.html)
+
+官方文档包含：
+- 详细的 API 参考文档
+- 完整的 Jupyter Notebook 示例
+- 最佳实践和设计模式
+- 高级功能和自定义选项
+- 社区贡献的示例
+- 安装和设置指南
+- 适合初学者和高级用户的教程
 
 ### 代码生成、执行和调试
 
