@@ -65,12 +65,15 @@ Azure PostgreSQL 支持扩展，包括 **pgvector**（向量搜索的核心）
 
 ```bash
 # 使用 Azure CLI
+# ⚠️ 重要：将 <YOUR_STRONG_PASSWORD> 替换为强密码
+# 密码要求：至少16字符，包含大小写字母、数字和特殊字符
+
 az postgres flexible-server create \
   --resource-group surfsense-rg \
   --name surfsense-db \
   --location eastus \
   --admin-user surfsense_admin \
-  --admin-password <strong-password> \
+  --admin-password <YOUR_STRONG_PASSWORD> \
   --sku-name Standard_B1ms \
   --tier Burstable \
   --version 14 \
@@ -78,7 +81,7 @@ az postgres flexible-server create \
   --backup-retention 7 \
   --yes
 
-# 或者通过 Azure Portal 创建（更简单）
+# 或者通过 Azure Portal 创建（更简单，推荐新手）
 # https://portal.azure.com -> 创建资源 -> PostgreSQL
 ```
 
@@ -121,7 +124,8 @@ SELECT * FROM pg_extension WHERE extname = 'vector';
 DATABASE_URL=postgresql+asyncpg://postgres:postgres@localhost:5432/surfsense
 
 # 新的（Azure）
-DATABASE_URL=postgresql+asyncpg://surfsense_admin:<password>@surfsense-db.postgres.database.azure.com:5432/surfsense?ssl=require
+# ⚠️ 重要：将 <YOUR_PASSWORD> 替换为你的实际密码
+DATABASE_URL=postgresql+asyncpg://surfsense_admin:<YOUR_PASSWORD>@surfsense-db.postgres.database.azure.com:5432/surfsense?ssl=require
 ```
 
 ```typescript
@@ -131,7 +135,8 @@ DATABASE_URL=postgresql+asyncpg://surfsense_admin:<password>@surfsense-db.postgr
 DATABASE_URL=postgresql://postgres:postgres@localhost:5432/surfsense
 
 // 新的（Azure）
-DATABASE_URL=postgresql://surfsense_admin:<password>@surfsense-db.postgres.database.azure.com:5432/surfsense?ssl=require
+// ⚠️ 重要：将 <YOUR_PASSWORD> 替换为你的实际密码
+DATABASE_URL=postgresql://surfsense_admin:<YOUR_PASSWORD>@surfsense-db.postgres.database.azure.com:5432/surfsense?ssl=require
 ```
 
 #### Step 5: 迁移数据（可选，5-10分钟）

@@ -172,17 +172,17 @@ pip install google-generativeai
 ### Week 1-2: 快速见效阶段
 **目标**: 立即产生用户价值
 
-- [x] Week 1 Day 1-3: **AI 文案生成器**
+- [ ] Week 1 Day 1-3: **AI 文案生成器**
   - 实现小红书文案生成
   - 实现 SEO 文章生成
   - 实现营销邮件生成
   - 前端 UI 组件
 
-- [x] Week 1 Day 4-5: **模板库**
+- [ ] Week 1 Day 4-5: **模板库**
   - 集成开源 Tailwind 模板
   - 创建文案模板库
 
-- [x] Week 2: **测试和优化**
+- [ ] Week 2: **测试和优化**
   - 用户测试
   - 性能优化
   - Bug 修复
@@ -190,23 +190,23 @@ pip install google-generativeai
 ### Week 3-6: 核心功能阶段
 **目标**: 实现 AI 网站生成器
 
-- [x] Week 3: **GrapesJS Phase 1**
+- [ ] Week 3: **GrapesJS Phase 1**
   - 安装和配置 GrapesJS
   - 创建 WebsiteEditor 组件
   - 基础 UI 集成
 
-- [x] Week 4: **GrapesJS Phase 2**
+- [ ] Week 4: **GrapesJS Phase 2**
   - 实现 WebsiteBuilderAgent
   - 内容分析算法
   - HTML 自动生成
   - API 路由
 
-- [x] Week 5: **GrapesJS Phase 3**
+- [ ] Week 5: **GrapesJS Phase 3**
   - 自定义组件库
   - 模板系统（落地页、博客、作品集）
   - 响应式预览
 
-- [x] Week 6: **部署集成**
+- [ ] Week 6: **部署集成**
   - Vercel 集成
   - Netlify 集成
   - S3 存储（可选）
@@ -214,13 +214,13 @@ pip install google-generativeai
 ### Week 7-8: 图像能力阶段
 **目标**: 添加 AI 图像功能
 
-- [x] Week 7: **AI 图像生成**
+- [ ] Week 7: **AI 图像生成**
   - 集成 Replicate API
   - 文生图功能
   - 背景移除
   - 前端组件
 
-- [x] Week 8: **图像增强**
+- [ ] Week 8: **图像增强**
   - 图生图
   - 风格迁移
   - 批量处理
@@ -228,23 +228,23 @@ pip install google-generativeai
 ### Week 9-10: 多模态阶段
 **目标**: 提升内容理解
 
-- [x] Week 9: **Gemini 集成**
+- [ ] Week 9: **Gemini 集成**
   - 图像理解
   - 视频分析
   - PDF 深度解析
 
-- [x] Week 10: **跨模态搜索**
+- [ ] Week 10: **跨模态搜索**
   - 多模态融合
   - 相似度搜索
 
 ### Week 11-12: 智能功能阶段
 **目标**: 从 NotebookLlama 提取功能
 
-- [x] Week 11: **问答生成 + 思维导图**
+- [ ] Week 11: **问答生成 + 思维导图**
   - Q&A 自动生成
   - 思维导图可视化
 
-- [x] Week 12: **数据可视化**
+- [ ] Week 12: **数据可视化**
   - 表格提取
   - 图表生成
 

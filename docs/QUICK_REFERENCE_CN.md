@@ -1,6 +1,6 @@
 # 快速参考 - 开发指南
 
-## 📚 文档导航（9份文档）
+## 📚 文档导航（11份文档）
 
 ### 🎯 开始开发前必读
 
@@ -48,6 +48,11 @@
 9. **[实现总结](IMPLEMENTATION_SUMMARY.md)** ⭐
    - ✅ 已完成工作总结
    - 英文文档
+
+10. **[Azure数据库集成](AZURE_DATABASE_INTEGRATION_CN.md)** ⭐⭐
+    - 🗄️ Azure免费数据库分析
+    - PostgreSQL迁移指南
+    - 30分钟完成迁移
 
 ---
 
