@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BuildingAI - SurfSense API Integration Example</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #f5f5f5;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .section {
+            margin-bottom: 2rem;
+        }
+
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            color: #333;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-top: 1rem;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 1rem;
+            color: #667eea;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .error {
+            background: #fee;
+            border-left-color: #f44;
+            color: #c00;
+        }
+
+        .success {
+            background: #efe;
+            border-left-color: #4c4;
+            color: #060;
+        }
+
+        .api-info {
+            background: #f0f4ff;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 2rem;
+        }
+
+        .api-info code {
+            background: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏢 BuildingAI - SurfSense API Integration</h1>
+        <p class="subtitle">Example of integrating SurfSense AI capabilities using the REST API</p>
+
+        <div class="api-info">
+            <strong>📡 API Endpoint:</strong> <code id="api-endpoint">https://surfsense.buildingai.com/api</code><br>
+            <small style="color: #666; margin-top: 0.5rem; display: block;">
+                This example demonstrates how to integrate SurfSense API into your BuildingAI application.
+            </small>
+        </div>
+
+        <!-- Authentication Section -->
+        <div class="section">
+            <h2>🔐 Authentication</h2>
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="your@email.com">
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Your password">
+            </div>
+            <button onclick="login()">Login</button>
+            <div id="auth-result" class="result" style="display: none;"></div>
+        </div>
+
+        <!-- Research Query Section -->
+        <div class="section">
+            <h2>🔍 AI Research Query</h2>
+            <div class="input-group">
+                <label for="query">Research Question</label>
+                <textarea id="query" placeholder="Ask a question about your documents...">What are the main features of SurfSense?</textarea>
+            </div>
+            <div class="input-group">
+                <label for="space-id">Space ID (optional)</label>
+                <input type="text" id="space-id" placeholder="Leave empty for default space">
+            </div>
+            <button onclick="research()" id="research-btn">Research</button>
+            <div class="loading" id="research-loading">⏳ Researching...</div>
+            <div id="research-result" class="result" style="display: none;"></div>
+        </div>
+
+        <!-- Document Upload Section -->
+        <div class="section">
+            <h2>📄 Upload Document</h2>
+            <div class="input-group">
+                <label for="file">Select File</label>
+                <input type="file" id="file" accept=".pdf,.doc,.docx,.txt,.md">
+            </div>
+            <div class="input-group">
+                <label for="doc-space-id">Space ID (optional)</label>
+                <input type="text" id="doc-space-id" placeholder="Leave empty for default space">
+            </div>
+            <button onclick="uploadDocument()" id="upload-btn">Upload</button>
+            <div class="loading" id="upload-loading">⏳ Uploading...</div>
+            <div id="upload-result" class="result" style="display: none;"></div>
+        </div>
+
+        <!-- List Spaces Section -->
+        <div class="section">
+            <h2>📚 List Knowledge Spaces</h2>
+            <button onclick="listSpaces()">Get Spaces</button>
+            <div class="loading" id="spaces-loading">⏳ Loading...</div>
+            <div id="spaces-result" class="result" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'https://surfsense.buildingai.com/api';
+        let authToken = localStorage.getItem('surfsense_token');
+
+        // Update token display
+        if (authToken) {
+            document.getElementById('auth-result').style.display = 'block';
+            document.getElementById('auth-result').className = 'result success';
+            document.getElementById('auth-result').textContent = '✓ Already authenticated';
+        }
+
+        async function login() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const resultDiv = document.getElementById('auth-result');
+
+            if (!email || !password) {
+                resultDiv.style.display = 'block';
+                resultDiv.className = 'result error';
+                resultDiv.textContent = 'Please enter email and password';
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        username: email,
+                        password: password
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    authToken = data.access_token;
+                    localStorage.setItem('surfsense_token', authToken);
+                    resultDiv.className = 'result success';
+                    resultDiv.textContent = '✓ Login successful!\\n\\nToken: ' + authToken.substring(0, 50) + '...';
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.textContent = '✗ Login failed: ' + (data.detail || 'Unknown error');
+                }
+                
+                resultDiv.style.display = 'block';
+            } catch (error) {
+                resultDiv.style.display = 'block';
+                resultDiv.className = 'result error';
+                resultDiv.textContent = '✗ Error: ' + error.message;
+            }
+        }
+
+        async function research() {
+            const query = document.getElementById('query').value;
+            const spaceId = document.getElementById('space-id').value;
+            const resultDiv = document.getElementById('research-result');
+            const loadingDiv = document.getElementById('research-loading');
+            const btn = document.getElementById('research-btn');
+
+            if (!authToken) {
+                resultDiv.style.display = 'block';
+                resultDiv.className = 'result error';
+                resultDiv.textContent = '✗ Please login first';
+                return;
+            }
+
+            if (!query) {
+                resultDiv.style.display = 'block';
+                resultDiv.className = 'result error';
+                resultDiv.textContent = '✗ Please enter a research question';
+                return;
+            }
+
+            loadingDiv.classList.add('active');
+            btn.disabled = true;
+            resultDiv.style.display = 'none';
+
+            try {
+                const body = {
+                    question: query,
+                    search_settings: {
+                        top_k: 10,
+                        use_reranker: true
+                    }
+                };
+
+                if (spaceId) {
+                    body.space_id = spaceId;
+                }
+
+                const response = await fetch(`${API_URL}/chat/research`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify(body)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    resultDiv.className = 'result success';
+                    let output = '✓ Research Results:\\n\\n';
+                    output += 'Answer:\\n' + (data.answer || data.response || 'No answer provided') + '\\n\\n';
+                    
+                    if (data.citations && data.citations.length > 0) {
+                        output += 'Citations:\\n';
+                        data.citations.forEach((citation, index) => {
+                            output += `\\n[${index + 1}] ${citation.title || 'Untitled'}\\n`;
+                            output += `    ${citation.text || citation.content || ''}\\n`;
+                        });
+                    }
+
+                    resultDiv.textContent = output;
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.textContent = '✗ Research failed: ' + (data.detail || JSON.stringify(data));
+                }
+
+                resultDiv.style.display = 'block';
+            } catch (error) {
+                resultDiv.style.display = 'block';
+                resultDiv.className = 'result error';
+                resultDiv.textContent = '✗ Error: ' + error.message;
+            } finally {
+                loadingDiv.classList.remove('active');
+                btn.disabled = false;
+            }
+        }
+
+        async function uploadDocument() {
+            const fileInput = document.getElementById('file');
+            const spaceId = document.getElementById('doc-space-id').value;
+            const resultDiv = document.getElementById('upload-result');
+            const loadingDiv = document.getElementById('upload-loading');
+            const btn = document.getElementById('upload-btn');
+
+            if (!authToken) {
+                resultDiv.style.display = 'block';
+                resultDiv.className = 'result error';
+                resultDiv.textContent = '✗ Please login first';
+                return;
+            }
+
+            if (!fileInput.files || fileInput.files.length === 0) {
+                resultDiv.style.display = 'block';
+                resultDiv.className = 'result error';
+                resultDiv.textContent = '✗ Please select a file';
+                return;
+            }
+
+            loadingDiv.classList.add('active');
+            btn.disabled = true;
+            resultDiv.style.display = 'none';
+
+            try {
+                const formData = new FormData();
+                formData.append('file', fileInput.files[0]);
+                if (spaceId) {
+                    formData.append('space_id', spaceId);
+                }
+
+                const response = await fetch(`${API_URL}/documents/upload`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    resultDiv.className = 'result success';
+                    resultDiv.textContent = '✓ Upload successful!\\n\\n' + JSON.stringify(data, null, 2);
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.textContent = '✗ Upload failed: ' + (data.detail || JSON.stringify(data));
+                }
+
+                resultDiv.style.display = 'block';
+            } catch (error) {
+                resultDiv.style.display = 'block';
+                resultDiv.className = 'result error';
+                resultDiv.textContent = '✗ Error: ' + error.message;
+            } finally {
+                loadingDiv.classList.remove('active');
+                btn.disabled = false;
+            }
+        }
+
+        async function listSpaces() {
+            const resultDiv = document.getElementById('spaces-result');
+            const loadingDiv = document.getElementById('spaces-loading');
+
+            if (!authToken) {
+                resultDiv.style.display = 'block';
+                resultDiv.className = 'result error';
+                resultDiv.textContent = '✗ Please login first';
+                return;
+            }
+
+            loadingDiv.classList.add('active');
+            resultDiv.style.display = 'none';
+
+            try {
+                const response = await fetch(`${API_URL}/spaces`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    resultDiv.className = 'result success';
+                    resultDiv.textContent = '✓ Spaces:\\n\\n' + JSON.stringify(data, null, 2);
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.textContent = '✗ Failed to get spaces: ' + (data.detail || JSON.stringify(data));
+                }
+
+                resultDiv.style.display = 'block';
+            } catch (error) {
+                resultDiv.style.display = 'block';
+                resultDiv.className = 'result error';
+                resultDiv.textContent = '✗ Error: ' + error.message;
+            } finally {
+                loadingDiv.classList.remove('active');
+            }
+        }
+    </script>
+</body>
+</html>

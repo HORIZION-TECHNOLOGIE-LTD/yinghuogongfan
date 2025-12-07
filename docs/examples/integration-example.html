@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BuildingAI - AI研究平台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav a:hover {
+            color: #667eea;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .welcome-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .welcome-section h1 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+        }
+
+        .welcome-section p {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .surfsense-container {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            margin-bottom: 2rem;
+        }
+
+        .surfsense-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1.5rem;
+            color: white;
+        }
+
+        .surfsense-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .surfsense-header p {
+            opacity: 0.9;
+        }
+
+        .surfsense-iframe {
+            width: 100%;
+            height: 800px;
+            border: none;
+            display: block;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+
+        .footer {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .footer p {
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .surfsense-iframe {
+                height: 600px;
+            }
+
+            .welcome-section h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">🏢 BuildingAI</div>
+            <nav class="nav">
+                <a href="#home">首页</a>
+                <a href="#research">AI研究</a>
+                <a href="#docs">文档</a>
+                <a href="#about">关于</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="welcome-section">
+            <h1>欢迎来到 BuildingAI 研究平台</h1>
+            <p>
+                BuildingAI 是一个集成了先进 AI 研究工具的综合平台。我们集成了 SurfSense AI 研究助手，
+                为您提供强大的知识管理、文档搜索和 AI 对话功能。
+            </p>
+            <p>
+                通过下方的 SurfSense 工具，您可以上传文档、进行智能搜索、与 AI 对话，
+                甚至可以生成播客内容。所有功能都支持本地部署，保护您的数据隐私。
+            </p>
+        </div>
+
+        <div class="features">
+            <div class="feature-card">
+                <h3>📁 文档管理</h3>
+                <p>支持 50+ 种文件格式，轻松上传和管理您的知识库</p>
+            </div>
+            <div class="feature-card">
+                <h3>🔍 智能搜索</h3>
+                <p>混合搜索技术，快速找到您需要的信息</p>
+            </div>
+            <div class="feature-card">
+                <h3>💬 AI 对话</h3>
+                <p>与您的文档对话，获得带引用的答案</p>
+            </div>
+            <div class="feature-card">
+                <h3>🎙️ 播客生成</h3>
+                <p>20秒生成3分钟播客，将内容转化为音频</p>
+            </div>
+        </div>
+
+        <div class="surfsense-container">
+            <div class="surfsense-header">
+                <h2>SurfSense AI 研究助手</h2>
+                <p>开始使用强大的 AI 工具进行研究和知识管理</p>
+            </div>
+            <div class="loading" id="loading">
+                <p>⏳ 正在加载 SurfSense...</p>
+            </div>
+            <iframe 
+                id="surfsense-frame"
+                src="https://surfsense.buildingai.com"
+                class="surfsense-iframe"
+                allow="clipboard-read; clipboard-write; microphone"
+                sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-downloads allow-modals"
+                style="display: none;"
+                onload="document.getElementById('loading').style.display='none'; this.style.display='block';"
+            ></iframe>
+        </div>
+
+        <div class="welcome-section">
+            <h2>快速开始</h2>
+            <ol style="margin-left: 1.5rem; color: #666; line-height: 1.8;">
+                <li>在上方的 SurfSense 界面中注册或登录账户</li>
+                <li>创建您的第一个知识空间（Space）</li>
+                <li>上传文档或连接外部数据源（Notion、GitHub、Slack 等）</li>
+                <li>开始搜索、对话或生成播客内容</li>
+            </ol>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 BuildingAI. Powered by SurfSense AI Research Assistant.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem;">
+            <a href="https://github.com/HORIZION-TECHNOLOGIE-LTD/yinghuogongfan" 
+               style="color: #667eea; text-decoration: none;">
+                View on GitHub
+            </a>
+        </p>
+    </footer>
+
+    <script>
+        // Handle iframe communication if needed
+        window.addEventListener('message', function(event) {
+            // Verify origin for security
+            if (event.origin === 'https://surfsense.buildingai.com') {
+                console.log('Message from SurfSense:', event.data);
+                // Handle messages from the iframe here
+            }
+        });
+
+        // Optional: Send messages to iframe
+        function sendMessageToSurfSense(message) {
+            const iframe = document.getElementById('surfsense-frame');
+            if (iframe && iframe.contentWindow) {
+                iframe.contentWindow.postMessage(message, 'https://surfsense.buildingai.com');
+            }
+        }
+    </script>
+</body>
+</html>

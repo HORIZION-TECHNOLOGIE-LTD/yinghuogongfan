@@ -168,6 +168,22 @@ SurfSense 提供三种入门方式：
 
 3. **[手动安装](https://www.surfsense.net/docs/manual-installation)** - 适合希望对设置有更多控制或需要自定义部署的用户。
 
+### 集成到现有网站
+
+SurfSense 可以集成到现有网站和应用程序中，例如 BuildingAI。查看我们的 **[集成指南](docs/INTEGRATION.md)**，了解以下详细说明：
+
+- **子域部署** - 在子域上部署 SurfSense（例如 `surfsense.buildingai.com`）
+- **子路径集成** - 在路径下集成（例如 `buildingai.com/surfsense`）
+- **iframe 嵌入** - 直接在您的页面中嵌入 SurfSense
+- **API 集成** - 在您的应用程序中使用 SurfSense 后端 API
+- **组件库** - 重用 SurfSense React 组件
+
+**快速链接：**
+- [集成指南](docs/INTEGRATION.md) - 完整的集成文档
+- [Nginx 示例](docs/nginx/) - 生产就绪的 nginx 配置
+- [HTML 示例](docs/examples/) - 可用的集成示例
+- [API 文档](docs/README.md#-api-endpoints-reference) - REST API 参考
+
 Docker 和手动安装指南都包含适用于 Windows、macOS 和 Linux 的详细操作系统特定说明。
 
 在自托管安装之前，请确保完成[先决条件设置步骤](https://www.surfsense.net/docs/)，包括：
