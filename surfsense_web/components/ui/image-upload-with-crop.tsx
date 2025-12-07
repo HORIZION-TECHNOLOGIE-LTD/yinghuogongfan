@@ -1,12 +1,12 @@
 "use client";
 
+import { Crop, Upload, X } from "lucide-react";
+import Image from "next/image";
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import Image from "next/image";
-import { ImageCropper } from "@/components/ui/image-cropper";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Crop, Upload, X } from "lucide-react";
+import { ImageCropper } from "@/components/ui/image-cropper";
 
 interface ImageUploadWithCropProps {
 	onImageReady: (file: File) => void;
@@ -111,12 +111,7 @@ export function ImageUploadWithCrop({
 					<CardContent className="p-6">
 						<div className="space-y-4">
 							<div className="relative aspect-square w-full max-w-md mx-auto rounded-lg overflow-hidden border">
-								<Image
-									src={croppedImageUrl}
-									alt="Cropped image"
-									fill
-									className="object-cover"
-								/>
+								<Image src={croppedImageUrl} alt="Cropped image" fill className="object-cover" />
 							</div>
 							<div className="flex gap-2 justify-center">
 								<Button variant="outline" size="sm" onClick={handleRecrop}>

@@ -22,7 +22,7 @@ export function BackgroundSelector({ onBackgroundChange, className }: Background
 			<div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6">
 				{BACKGROUND_OPTIONS.map((bg, index) => (
 					<button
-						key={index}
+						key={`bg-${bg.name}-${index}`}
 						type="button"
 						onClick={() => handleBackgroundSelect(index)}
 						className={`relative h-24 w-full overflow-hidden rounded-lg border-2 transition-all ${

@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { BACKGROUND_OPTIONS } from "@/components/backgrounds/background-snippets";
-import { ImageUploadWithCrop } from "@/components/ui/image-upload-with-crop";
+import { toast } from "sonner";
+import { BACKGROUND_OPTIONS } from "@/components/backgrounds";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { ImageUploadWithCrop } from "@/components/ui/image-upload-with-crop";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { toast } from "sonner";
 
 export default function DemoPage() {
 	const [selectedBackground, setSelectedBackground] = useState<number>(0);
@@ -31,7 +31,9 @@ export default function DemoPage() {
 			{/* Content Layer */}
 			<div className="container mx-auto px-4 py-8">
 				<div className="mb-8 text-center">
-					<h1 className="text-4xl font-bold mb-2 text-foreground">Background Snippets & Image Cropping Demo</h1>
+					<h1 className="text-4xl font-bold mb-2 text-foreground">
+						Background Snippets & Image Cropping Demo
+					</h1>
 					<p className="text-muted-foreground">
 						Explore modern background patterns and test image cropping functionality
 					</p>
@@ -55,7 +57,7 @@ export default function DemoPage() {
 								<div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6">
 									{BACKGROUND_OPTIONS.map((bg, index) => (
 										<button
-											key={index}
+											key={`demo-bg-${bg.name}-${index}`}
 											type="button"
 											onClick={() => handleBackgroundChange(index)}
 											className={`relative h-24 w-full overflow-hidden rounded-lg border-2 transition-all ${
@@ -140,7 +142,7 @@ export default function DemoPage() {
 									<ul className="space-y-2">
 										{uploadedImages.map((file, index) => (
 											<li
-												key={index}
+												key={`uploaded-${file.name}-${file.size}-${index}`}
 												className="flex items-center justify-between p-3 rounded-lg bg-muted"
 											>
 												<span className="text-sm font-medium">{file.name}</span>
@@ -154,7 +156,8 @@ export default function DemoPage() {
 										className="w-full mt-4"
 										onClick={() => {
 											toast.info("Upload functionality", {
-												description: "This is a demo. In production, images would be uploaded here.",
+												description:
+													"This is a demo. In production, images would be uploaded here.",
 											});
 										}}
 									>
@@ -167,9 +170,7 @@ export default function DemoPage() {
 						<Card className="bg-background/80 backdrop-blur-sm">
 							<CardHeader>
 								<CardTitle>Features</CardTitle>
-								<CardDescription>
-									Powerful image cropping capabilities
-								</CardDescription>
+								<CardDescription>Powerful image cropping capabilities</CardDescription>
 							</CardHeader>
 							<CardContent>
 								<ul className="list-disc list-inside text-sm space-y-1 text-muted-foreground">

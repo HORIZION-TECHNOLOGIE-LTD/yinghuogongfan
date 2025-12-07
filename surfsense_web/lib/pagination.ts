@@ -8,7 +8,12 @@ export type ListResponse<T> = {
 export function normalizeListResponse<T>(payload: unknown): ListResponse<T> {
 	try {
 		// Case 1: already in desired shape
-		if (payload && typeof payload === "object" && "items" in payload && Array.isArray((payload as { items: unknown }).items)) {
+		if (
+			payload &&
+			typeof payload === "object" &&
+			"items" in payload &&
+			Array.isArray((payload as { items: unknown }).items)
+		) {
 			const obj = payload as { items: T[]; total?: number };
 			const total = typeof obj.total === "number" ? obj.total : obj.items.length;
 			return { items: obj.items, total };

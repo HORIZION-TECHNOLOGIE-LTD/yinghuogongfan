@@ -1,10 +1,15 @@
 "use client";
 
-import { type Area, type Point } from "react-easy-crop";
 import { useCallback, useState } from "react";
-import Cropper from "react-easy-crop";
+import Cropper, { type Area, type Point } from "react-easy-crop";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+	Dialog,
+	DialogContent,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+} from "@/components/ui/dialog";
 import { Slider } from "@/components/ui/slider";
 
 interface ImageCropperProps {
@@ -108,7 +113,7 @@ export function ImageCropper({
 				</div>
 				<div className="space-y-4 py-4">
 					<div className="space-y-2">
-						<label className="text-sm font-medium">Zoom</label>
+						<div className="text-sm font-medium">Zoom</div>
 						<Slider
 							min={1}
 							max={3}
