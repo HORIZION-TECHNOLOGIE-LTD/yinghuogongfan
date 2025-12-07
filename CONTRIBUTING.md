@@ -66,6 +66,35 @@ Want to fix it? Go for it! Just link the issue in your PR.
 
 For detailed setup instructions, refer to our [Installation Guide](https://www.surfsense.net/docs/).
 
+### 🤖 Enhanced Development with PAL MCP (Optional)
+
+For advanced contributors, consider using [PAL MCP (DASHI)](docs/PAL_MCP_INTEGRATION.md) to enhance your development workflow:
+
+**Benefits:**
+- **Multi-model code reviews** before committing
+- **AI-powered debugging** with systematic investigation
+- **Architecture planning** with consensus from multiple AI models
+- **Extended thinking** for complex problem solving
+
+**Quick Setup:**
+```bash
+# Install PAL MCP
+git clone https://github.com/BeehiveInnovations/pal-mcp-server.git
+cd pal-mcp-server && ./run-server.sh
+
+# Or add to SurfSense with Docker Compose
+docker-compose -f docker-compose.yml -f docker-compose.pal.yml up
+```
+
+**Usage Examples:**
+```
+"Use pal codereview with multiple models to check this connector implementation"
+"Get pal consensus from gemini-pro and gpt-5 on this architecture decision"
+"Run pal precommit to validate changes before pushing"
+```
+
+See [PAL MCP Integration Guide](docs/PAL_MCP_INTEGRATION.md) for complete details.
+
 ## 🏗️ Project Structure
 
 SurfSense consists of three main components:
