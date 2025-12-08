@@ -164,15 +164,20 @@ SurfSense provides three options to get started:
    - Instant access to all features
    - Perfect for getting started quickly
 
-2. **[Docker Installation (Recommended for Self-Hosting)](https://www.surfsense.net/docs/docker-installation)** - Easy way to get SurfSense up and running with all dependencies containerized.
+2. **[Docker Installation (Recommended for Self-Hosting)](DEPLOYMENT.md)** - Easy way to get SurfSense up and running with all dependencies containerized.
    - Includes pgAdmin for database management through a web UI
    - Supports environment variable customization via `.env` file
    - Flexible deployment options (full stack or core services only)
    - No need to manually edit configuration files between environments
+   - **📖 See our detailed [Deployment Guide](DEPLOYMENT.md) for step-by-step instructions**
 
 3. **[Manual Installation](https://www.surfsense.net/docs/manual-installation)** - For users who prefer more control over their setup or need to customize their deployment.
 
 Docker and manual installation guides include detailed OS-specific instructions for Windows, macOS, and Linux.
+
+**✨ New: Complete deployment documentation is now available in the repository:**
+- **[English Deployment Guide](DEPLOYMENT.md)**
+- **[中文部署指南](DEPLOYMENT.zh-CN.md)**
 
 Before self-hosting installation, make sure to complete the [prerequisite setup steps](https://www.surfsense.net/docs/) including:
 - Auth setup
