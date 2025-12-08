@@ -169,6 +169,7 @@ SurfSense provides three options to get started:
    - Supports environment variable customization via `.env` file
    - Flexible deployment options (full stack or core services only)
    - No need to manually edit configuration files between environments
+   - See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed Docker deployment and image building guide
 
 3. **[Manual Installation](https://www.surfsense.net/docs/manual-installation)** - For users who prefer more control over their setup or need to customize their deployment.
 

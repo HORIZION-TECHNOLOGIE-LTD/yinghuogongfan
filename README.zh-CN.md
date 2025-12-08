@@ -176,6 +176,7 @@ SurfSense 提供三种入门方式：
    - 支持通过 `.env` 文件自定义环境变量
    - 灵活的部署选项（完整堆栈或仅核心服务）
    - 无需在环境之间手动编辑配置文件
+   - 查看 [DEPLOYMENT.zh-CN.md](DEPLOYMENT.zh-CN.md) 获取详细的 Docker 部署和镜像构建指南
 
 3. **[手动安装](https://www.surfsense.net/docs/manual-installation)** - 适合希望对设置有更多控制或需要自定义部署的用户。
 
