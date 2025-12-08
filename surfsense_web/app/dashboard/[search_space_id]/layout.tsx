@@ -53,6 +53,12 @@ export default function DashboardLayout({
 			],
 		},
 		{
+			title: "Webpage Builder",
+			url: `/dashboard/${search_space_id}/webpage-builder`,
+			icon: "Palette",
+			items: [],
+		},
+		{
 			title: "Settings",
 			url: `/dashboard/${search_space_id}/settings`,
 			icon: "Settings2",

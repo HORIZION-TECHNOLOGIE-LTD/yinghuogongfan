@@ -149,7 +149,8 @@
 		"podcasts": "播客",
 		"logs": "日志",
 		"all_search_spaces": "所有搜索空间",
-		"chat": "聊天"
+		"chat": "聊天",
+		"webpage_builder": "网页构建器"
 	},
 	"pricing": {
 		"title": "SurfSense 定价",
@@ -624,7 +625,8 @@
 		"add_connector": "添加连接器",
 		"manage_connectors": "管理连接器",
 		"edit_connector": "编辑连接器",
-		"manage": "管理"
+		"manage": "管理",
+		"webpage_builder": "网页构建器"
 	},
 	"sidebar": {
 		"recent_chats": "最近对话",

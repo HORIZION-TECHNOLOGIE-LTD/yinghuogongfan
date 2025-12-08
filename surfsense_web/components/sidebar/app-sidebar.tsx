@@ -11,6 +11,7 @@ import {
 	Info,
 	type LucideIcon,
 	MessageCircleMore,
+	Palette,
 	Podcast,
 	Settings2,
 	SquareLibrary,
@@ -53,6 +54,7 @@ export const iconMap: Record<string, LucideIcon> = {
 	Trash2,
 	Podcast,
 	FileText,
+	Palette,
 };
 
 const defaultData = {

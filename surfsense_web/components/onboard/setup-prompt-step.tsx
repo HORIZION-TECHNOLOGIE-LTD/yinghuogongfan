@@ -100,7 +100,8 @@ export function SetupPromptStep({ searchSpaceId, onComplete }: SetupPromptStepPr
 			onComplete?.();
 		} catch (error: unknown) {
 			console.error("Error saving prompt configuration:", error);
-			const errorMessage = error instanceof Error ? error.message : "Failed to save prompt configuration";
+			const errorMessage =
+				error instanceof Error ? error.message : "Failed to save prompt configuration";
 			toast.error(errorMessage);
 		} finally {
 			setSaving(false);

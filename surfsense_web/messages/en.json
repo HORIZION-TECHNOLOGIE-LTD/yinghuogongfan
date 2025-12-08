@@ -149,7 +149,8 @@
 		"podcasts": "Podcasts",
 		"logs": "Logs",
 		"all_search_spaces": "All Search Spaces",
-		"chat": "Chat"
+		"chat": "Chat",
+		"webpage_builder": "Webpage Builder"
 	},
 	"pricing": {
 		"title": "SurfSense Pricing",
@@ -624,7 +625,8 @@
 		"add_connector": "Add Connector",
 		"manage_connectors": "Manage Connectors",
 		"edit_connector": "Edit Connector",
-		"manage": "Manage"
+		"manage": "Manage",
+		"webpage_builder": "Webpage Builder"
 	},
 	"sidebar": {
 		"recent_chats": "Recent Chats",

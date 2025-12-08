@@ -58,7 +58,14 @@ interface SemiCircleOrbitProps {
 	startIndex: number;
 }
 
-function SemiCircleOrbit({ radius, centerX, centerY, count, iconSize, startIndex }: SemiCircleOrbitProps) {
+function SemiCircleOrbit({
+	radius,
+	centerX,
+	centerY,
+	count,
+	iconSize,
+	startIndex,
+}: SemiCircleOrbitProps) {
 	return (
 		<>
 			{/* Semi-circle glow background */}

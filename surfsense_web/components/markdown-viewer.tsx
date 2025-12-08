@@ -35,7 +35,9 @@ export function MarkdownViewer({ content, className }: MarkdownViewerProps) {
 				</a>
 			),
 			// biome-ignore lint/suspicious/noExplicitAny: react-markdown component props
-			li: ({ children, ...props }: { children?: React.ReactNode } & Record<string, unknown>) => <li {...props}>{children}</li>,
+			li: ({ children, ...props }: { children?: React.ReactNode } & Record<string, unknown>) => (
+				<li {...props}>{children}</li>
+			),
 			// biome-ignore lint/suspicious/noExplicitAny: react-markdown component props
 			ul: (props: Record<string, unknown>) => <ul className="list-disc pl-5 my-2" {...props} />,
 			// biome-ignore lint/suspicious/noExplicitAny: react-markdown component props
@@ -95,7 +97,11 @@ export function MarkdownViewer({ content, className }: MarkdownViewerProps) {
 				<td className="px-3 py-2 border-t border-border" {...props} />
 			),
 			// biome-ignore lint/suspicious/noExplicitAny: react-markdown component props
-			code: ({ className, children, ...props }: { className?: string; children?: React.ReactNode } & Record<string, unknown>) => {
+			code: ({
+				className,
+				children,
+				...props
+			}: { className?: string; children?: React.ReactNode } & Record<string, unknown>) => {
 				const match = /language-(\w+)/.exec(className || "");
 				const language = match ? match[1] : "";
 				const isInline = !match;
@@ -109,11 +115,7 @@ export function MarkdownViewer({ content, className }: MarkdownViewerProps) {
 				}
 
 				// For code blocks, add syntax highlighting and copy functionality
-				return (
-					<CodeBlock language={language}>
-						{String(children).replace(/\n$/, "")}
-					</CodeBlock>
-				);
+				return <CodeBlock language={language}>{String(children).replace(/\n$/, "")}</CodeBlock>;
 			},
 		};
 	}, []);

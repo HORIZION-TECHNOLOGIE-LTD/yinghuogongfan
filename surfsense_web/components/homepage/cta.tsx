@@ -17,8 +17,8 @@ export function CTAHomepage() {
 					<span className="font-bold text-black dark:text-white">discovers and collaborates</span>
 				</h2>
 				<p className="text-left text-neutral-500 mt-4 max-w-lg dark:text-neutral-200 text-xl md:text-3xl tracking-tight font-medium">
-					Unite your <span className="text-sky-700">team&apos;s knowledge</span> in one collaborative
-					space with <span className="text-indigo-700">intelligent search</span>.
+					Unite your <span className="text-sky-700">team&apos;s knowledge</span> in one
+					collaborative space with <span className="text-indigo-700">intelligent search</span>.
 				</p>
 
 				<div className="flex items-start sm:items-center flex-col sm:flex-row sm:gap-4">
