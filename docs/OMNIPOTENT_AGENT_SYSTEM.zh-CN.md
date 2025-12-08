@@ -119,7 +119,384 @@ class FrameworkAdapter(ABC):
         pass
 ```
 
-### 3. 行业特定智能体模板
+### 3. 多工具智能体系统
+
+**目的**: 使单个智能体能够使用多个工具实现多领域处理能力
+
+**理念**: 不是为每个能力创建单独的智能体，而是为一个通用智能体配备多个工具来处理不同领域的各种任务。
+
+**主要优势**:
+- **降低复杂性**: 一个智能体接口而不是多个专门智能体
+- **更好的上下文保留**: 在不同工具使用之间保持上下文
+- **成本效益**: 单个智能体生命周期减少开销
+- **灵活的能力组合**: 根据任务需求动态添加/删除工具
+
+#### 工具注册系统
+
+```python
+class ToolRegistry:
+    """所有可用工具的中央注册表"""
+    
+    def __init__(self):
+        self.tools = {}
+        self.tool_categories = {
+            'data_access': [],      # 数据库、API、文件访问
+            'computation': [],      # 数学、统计、ML推理
+            'communication': [],    # 电子邮件、Slack、通知
+            'web': [],             # 网页抓取、搜索、浏览
+            'content': [],         # 文本生成、图像处理
+            'code': [],            # 代码执行、分析、生成
+            'memory': [],          # 向量存储、知识图谱
+            'integration': []      # 外部服务集成
+        }
+    
+    def register_tool(self, tool: Tool, category: str):
+        """注册新工具"""
+        self.tools[tool.name] = tool
+        self.tool_categories[category].append(tool.name)
+    
+    def get_tools_by_category(self, category: str) -> List[Tool]:
+        """获取某类别的所有工具"""
+        return [self.tools[name] for name in self.tool_categories[category]]
+    
+    def get_tool(self, name: str) -> Tool:
+        """按名称获取特定工具"""
+        return self.tools.get(name)
+```
+
+#### 多工具智能体实现
+
+```python
+class MultiToolAgent:
+    """可以使用多个工具实现多领域能力的智能体"""
+    
+    def __init__(self, framework: str, name: str):
+        self.framework = framework
+        self.name = name
+        self.tools = []
+        self.tool_usage_stats = {}
+        self.context = AgentContext()
+    
+    def register_tool(self, tool: Tool):
+        """为此智能体注册一个工具"""
+        self.tools.append(tool)
+        self.tool_usage_stats[tool.name] = {
+            'calls': 0,
+            'successes': 0,
+            'failures': 0,
+            'avg_duration': 0
+        }
+        print(f"✅ 已为智能体 '{self.name}' 注册工具 '{tool.name}'")
+    
+    def register_tools(self, tools: List[Tool]):
+        """一次注册多个工具"""
+        for tool in tools:
+            self.register_tool(tool)
+    
+    def get_available_tools(self) -> List[str]:
+        """列出所有可用工具"""
+        return [tool.name for tool in self.tools]
+    
+    def select_tools_for_task(self, task: Task) -> List[Tool]:
+        """智能选择用于任务的工具"""
+        # 分析任务需求
+        required_capabilities = self.analyze_task_capabilities(task)
+        
+        # 将工具匹配到能力
+        selected_tools = []
+        for tool in self.tools:
+            if any(cap in tool.capabilities for cap in required_capabilities):
+                selected_tools.append(tool)
+        
+        return selected_tools
+    
+    async def execute_with_tools(self, task: Task) -> Result:
+        """使用适当的工具执行任务"""
+        # 选择相关工具
+        selected_tools = self.select_tools_for_task(task)
+        
+        # 使用工具访问执行
+        result = await self.framework_execute(
+            task=task,
+            available_tools=selected_tools,
+            context=self.context
+        )
+        
+        # 更新使用统计
+        self._update_tool_stats(result.tools_used)
+        
+        return result
+```
+
+#### 示例: 多领域金融智能体
+
+```python
+# 创建具有多个工具的金融智能体
+financial_agent = MultiToolAgent(
+    framework='autogen',
+    name='FinancialAssistant'
+)
+
+# 注册数据访问工具
+financial_agent.register_tools([
+    Tool(name='stock_api', 
+         capabilities=['market_data', 'real_time_quotes'],
+         function=fetch_stock_data),
+    
+    Tool(name='database_query',
+         capabilities=['historical_data', 'sql_query'],
+         function=query_financial_db),
+    
+    Tool(name='news_search',
+         capabilities=['web_search', 'news_aggregation'],
+         function=search_financial_news),
+])
+
+# 注册计算工具
+financial_agent.register_tools([
+    Tool(name='technical_analysis',
+         capabilities=['chart_analysis', 'indicators'],
+         function=calculate_technical_indicators),
+    
+    Tool(name='risk_calculator',
+         capabilities=['risk_metrics', 'portfolio_analysis'],
+         function=calculate_risk_metrics),
+    
+    Tool(name='price_predictor',
+         capabilities=['ml_inference', 'forecasting'],
+         function=predict_stock_price),
+])
+
+# 注册通信工具
+financial_agent.register_tools([
+    Tool(name='alert_system',
+         capabilities=['notifications', 'alerts'],
+         function=send_alert),
+    
+    Tool(name='report_generator',
+         capabilities=['document_generation', 'visualization'],
+         function=generate_report),
+])
+
+# 现在智能体可以处理各种任务
+result1 = await financial_agent.execute_with_tools(
+    Task("分析 AAPL 股票并给我发送报告")
+)
+# 使用: stock_api, technical_analysis, news_search, report_generator
+
+result2 = await financial_agent.execute_with_tools(
+    Task("计算投资组合风险，如果过高则发出警报")
+)
+# 使用: database_query, risk_calculator, alert_system
+```
+
+#### 示例: 多领域医疗智能体
+
+```python
+# 创建具有多种能力的医疗智能体
+health_agent = MultiToolAgent(
+    framework='llamaindex',
+    name='HealthcareAssistant'
+)
+
+# 注册医学知识工具
+health_agent.register_tools([
+    Tool(name='medical_kb',
+         capabilities=['knowledge_base', 'medical_info'],
+         function=query_medical_knowledge),
+    
+    Tool(name='drug_database',
+         capabilities=['medication_info', 'drug_interactions'],
+         function=check_drug_interactions),
+    
+    Tool(name='symptom_checker',
+         capabilities=['diagnosis_support', 'symptom_analysis'],
+         function=analyze_symptoms),
+])
+
+# 注册患者数据工具
+health_agent.register_tools([
+    Tool(name='ehr_access',
+         capabilities=['patient_records', 'medical_history'],
+         function=access_electronic_health_record),
+    
+    Tool(name='lab_results',
+         capabilities=['test_results', 'data_analysis'],
+         function=fetch_lab_results),
+])
+
+# 注册通信工具
+health_agent.register_tools([
+    Tool(name='appointment_scheduler',
+         capabilities=['scheduling', 'calendar_management'],
+         function=schedule_appointment),
+    
+    Tool(name='patient_messenger',
+         capabilities=['secure_messaging', 'hipaa_compliant'],
+         function=send_secure_message),
+])
+
+# 处理复杂的医疗任务
+result = await health_agent.execute_with_tools(
+    Task("患者报告头痛和发烧。检查病史，分析症状，并安排随访")
+)
+# 使用: ehr_access, symptom_checker, medical_kb, appointment_scheduler
+```
+
+#### 工具组合模式
+
+**模式 1: 顺序工具链**
+```python
+class ToolChain:
+    """按顺序执行工具，将输出传递给下一个工具"""
+    
+    def __init__(self, agent: MultiToolAgent):
+        self.agent = agent
+    
+    async def execute_chain(self, tools: List[Tool], initial_input: Any):
+        result = initial_input
+        for tool in tools:
+            result = await tool.execute(result)
+        return result
+
+# 示例: 数据管道
+chain = ToolChain(agent)
+result = await chain.execute_chain(
+    tools=[
+        agent.get_tool('data_fetcher'),
+        agent.get_tool('data_cleaner'),
+        agent.get_tool('data_analyzer'),
+        agent.get_tool('report_generator')
+    ],
+    initial_input={'query': 'sales data 2024'}
+)
+```
+
+**模式 2: 并行工具执行**
+```python
+class ParallelToolExecutor:
+    """并行执行多个工具并聚合结果"""
+    
+    def __init__(self, agent: MultiToolAgent):
+        self.agent = agent
+    
+    async def execute_parallel(self, tools: List[Tool], input_data: Any):
+        tasks = [tool.execute(input_data) for tool in tools]
+        results = await asyncio.gather(*tasks)
+        return self.aggregate_results(results)
+
+# 示例: 多源数据收集
+executor = ParallelToolExecutor(agent)
+result = await executor.execute_parallel(
+    tools=[
+        agent.get_tool('api_source_1'),
+        agent.get_tool('api_source_2'),
+        agent.get_tool('web_scraper'),
+        agent.get_tool('database_query')
+    ],
+    input_data={'topic': 'market trends'}
+)
+```
+
+**模式 3: 条件工具选择**
+```python
+class ConditionalToolSelector:
+    """根据条件选择和使用工具"""
+    
+    def __init__(self, agent: MultiToolAgent):
+        self.agent = agent
+    
+    async def execute_conditional(self, task: Task):
+        # 分析任务
+        if task.requires_real_time_data:
+            tools = [agent.get_tool('api_call')]
+        elif task.requires_historical_data:
+            tools = [agent.get_tool('database_query')]
+        elif task.requires_web_data:
+            tools = [agent.get_tool('web_scraper')]
+        else:
+            tools = [agent.get_tool('cache_lookup')]
+        
+        # 使用选定的工具执行
+        return await self.execute_with_tools(tools, task)
+```
+
+#### 工具访问控制与安全
+
+```python
+class SecureMultiToolAgent(MultiToolAgent):
+    """具有工具访问控制的智能体"""
+    
+    def __init__(self, framework: str, name: str, permissions: Dict):
+        super().__init__(framework, name)
+        self.permissions = permissions
+        self.audit_log = []
+    
+    def register_tool(self, tool: Tool):
+        """带权限检查的工具注册"""
+        if not self.has_permission(tool):
+            raise PermissionError(f"智能体 '{self.name}' 缺少工具 '{tool.name}' 的权限")
+        super().register_tool(tool)
+    
+    def has_permission(self, tool: Tool) -> bool:
+        """检查智能体是否有使用工具的权限"""
+        required_permission = tool.required_permission
+        return required_permission in self.permissions.get('tools', [])
+    
+    async def execute_with_tools(self, task: Task) -> Result:
+        """带审计日志的执行"""
+        # 记录执行开始
+        self.audit_log.append({
+            'timestamp': datetime.now(),
+            'task': task.description,
+            'agent': self.name,
+            'action': 'start'
+        })
+        
+        # 执行
+        result = await super().execute_with_tools(task)
+        
+        # 记录执行结束
+        self.audit_log.append({
+            'timestamp': datetime.now(),
+            'task': task.description,
+            'agent': self.name,
+            'action': 'complete',
+            'tools_used': result.tools_used,
+            'success': result.success
+        })
+        
+        return result
+```
+
+#### 多工具智能体最佳实践
+
+1. **工具组织**
+   - 按领域对相关工具进行分组
+   - 使用清晰、描述性的工具名称
+   - 记录工具能力和要求
+
+2. **性能优化**
+   - 缓存频繁访问的工具结果
+   - 尽可能使用并行执行
+   - 延迟加载昂贵的工具
+
+3. **错误处理**
+   - 实现备用工具
+   - 工具失败时优雅降级
+   - 清晰的错误消息和日志记录
+
+4. **安全**
+   - 实现基于权限的工具访问
+   - 审计所有工具使用
+   - 验证工具输入/输出
+
+5. **监控**
+   - 跟踪工具使用统计
+   - 监控工具性能
+   - 工具故障时发出警报
+
+### 4. 行业特定智能体模板
 
 **目的**: 针对常见行业用例的预配置智能体模板
 
@@ -179,7 +556,7 @@ class EducationalAgentTemplate:
         )
 ```
 
-### 4. 任务编排系统
+### 5. 任务编排系统
 
 **目的**: 协调跨多个智能体的复杂多步骤任务
 
@@ -214,7 +591,7 @@ class TaskOrchestrator:
         return final_result
 ```
 
-### 5. 智能体记忆与上下文管理
+### 6. 智能体记忆与上下文管理
 
 **目的**: 在对话和任务之间维护上下文
 
