@@ -9,7 +9,9 @@ interface EditConnectorNameFormProps<T extends FieldValues = FieldValues> {
 	control: Control<T>;
 }
 
-export function EditConnectorNameForm<T extends FieldValues = FieldValues>({ control }: EditConnectorNameFormProps<T>) {
+export function EditConnectorNameForm<T extends FieldValues = FieldValues>({
+	control,
+}: EditConnectorNameFormProps<T>) {
 	return (
 		<FormField
 			control={control}
