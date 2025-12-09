@@ -133,6 +133,10 @@ https://github.com/user-attachments/assets/a0a16566-6967-4374-ac51-9b3e07fbecd7
 - SurfSense 扩展可用于保存您喜欢的任何网页
 - 主要用途是保存需要身份验证的受保护网页
 
+### 🕷️ **网络爬虫**
+- 内置支持 Firecrawl 和 AsyncChromiumLoader 进行网页内容提取
+- **WebMagic 集成**：对于需要高级网页抓取功能的用户，特别是中文网站，SurfSense 可以与 [WebMagic](https://github.com/code4craft/webmagic) 集成 - 一个强大的基于 Java 的网络爬虫框架
+- 详细设置说明请参阅 [WebMagic 集成指南](docs/webmagic-integration.md)
 
 
 ## 🤖 使用 PAL MCP 增强 AI 能力
