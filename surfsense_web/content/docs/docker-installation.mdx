@@ -10,6 +10,38 @@ full: true
 
 This guide explains how to run SurfSense using Docker Compose, which is the preferred and recommended method for deployment.
 
+## Quick Start (Recommended)
+
+For the fastest setup experience, use our automated quick-start scripts:
+
+**Linux/macOS:**
+```bash
+git clone https://github.com/MODSetter/SurfSense
+cd SurfSense
+./quick-start.sh
+```
+
+**Windows:**
+```cmd
+git clone https://github.com/MODSetter/SurfSense
+cd SurfSense
+quick-start.bat
+```
+
+The script will automatically create all configuration files and guide you through the setup process. After adding your API keys as instructed, simply run:
+
+```bash
+docker compose up -d
+```
+
+For comprehensive deployment documentation including troubleshooting and production configurations, see:
+- [English Deployment Guide](https://github.com/MODSetter/SurfSense/blob/main/DEPLOYMENT.md)
+- [中文部署指南](https://github.com/MODSetter/SurfSense/blob/main/DEPLOYMENT.zh-CN.md)
+
+## Manual Setup
+
+If you prefer to set up manually or need more control over the configuration:
+
 ## Prerequisites
 
 Before you begin, ensure you have:

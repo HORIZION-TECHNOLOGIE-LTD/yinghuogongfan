@@ -6,7 +6,36 @@ full: true
 
 # Installing SurfSense
 
-There are two ways to install SurfSense, but both require the repository to be cloned first. Clone [SurfSense](https://github.com/MODSetter/SurfSense) and then:
+SurfSense offers multiple installation options to suit your needs. All self-hosted installations require the repository to be cloned first.
+
+## Quick Start Scripts (Recommended for New Users)
+
+The easiest way to get started with SurfSense is using our automated quick-start scripts:
+
+**Linux/macOS:**
+```bash
+git clone https://github.com/MODSetter/SurfSense
+cd SurfSense
+./quick-start.sh
+```
+
+**Windows:**
+```cmd
+git clone https://github.com/MODSetter/SurfSense
+cd SurfSense
+quick-start.bat
+```
+
+These scripts will automatically:
+- Create all necessary `.env` files from examples
+- Generate secure random passwords
+- Guide you through the remaining configuration steps
+
+After running the script, simply add your API keys as instructed and start the services with `docker compose up -d`.
+
+For comprehensive deployment documentation, see:
+- [English Deployment Guide](https://github.com/MODSetter/SurfSense/blob/main/DEPLOYMENT.md)
+- [中文部署指南](https://github.com/MODSetter/SurfSense/blob/main/DEPLOYMENT.zh-CN.md)
 
 ## Docker Installation 
 
