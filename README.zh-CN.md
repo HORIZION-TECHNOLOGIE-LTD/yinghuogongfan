@@ -307,6 +307,15 @@ Docker 和手动安装指南都包含适用于 Windows、macOS 和 Linux 的详�
 基于 Plasmo 的 Manifest v3
 
 
+## 相关资源
+
+### UI 框架参考
+
+如果您希望使用其他 UI 框架来扩展或自定义 SurfSense，以下是一些推荐的资源：
+
+- **Layui**：经典模块化前端 UI 框架，适合快速开发  
+  [https://gitee.com/layui/layui](https://gitee.com/layui/layui)
+
 ## 贡献
 
 非常欢迎贡献！贡献可以小到一个 ⭐，甚至是发现和创建问题。

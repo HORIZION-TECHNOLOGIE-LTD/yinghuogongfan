@@ -300,6 +300,15 @@ Before self-hosting installation, make sure to complete the [prerequisite setup 
  Manifest v3 on Plasmo
 
 
+## Related Resources
+
+### UI Framework References
+
+If you're looking to extend or customize SurfSense with alternative UI frameworks, here are some recommended resources:
+
+- **Layui**: A classic modular frontend UI framework for rapid development  
+  [https://gitee.com/layui/layui](https://gitee.com/layui/layui)
+
 ## Contribute 
 
 Contributions are very welcome! A contribution can be as small as a ⭐ or even finding and creating issues.
