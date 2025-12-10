@@ -173,6 +173,22 @@ SurfSense provides three options to get started:
 
 3. **[Manual Installation](https://www.surfsense.net/docs/manual-installation)** - For users who prefer more control over their setup or need to customize their deployment.
 
+### Integration into Existing Sites
+
+SurfSense can be integrated into existing websites and applications such as BuildingAI. See our **[Integration Guide](docs/INTEGRATION.md)** for detailed instructions on:
+
+- **Subdomain Deployment** - Deploy SurfSense on a subdomain (e.g., `surfsense.buildingai.com`)
+- **Subpath Integration** - Integrate under a path (e.g., `buildingai.com/surfsense`)
+- **iframe Embedding** - Embed SurfSense directly in your pages
+- **API Integration** - Use SurfSense backend APIs in your application
+- **Component Library** - Reuse SurfSense React components
+
+**Quick Links:**
+- [Integration Guide](docs/INTEGRATION.md) - Complete integration documentation
+- [Nginx Examples](docs/nginx/) - Production-ready nginx configurations
+- [HTML Examples](docs/examples/) - Working integration examples
+- [API Documentation](docs/README.md#-api-endpoints-reference) - REST API reference
+
 Docker and manual installation guides include detailed OS-specific instructions for Windows, macOS, and Linux.
 
 **✨ New: Complete deployment documentation is now available in the repository:**
