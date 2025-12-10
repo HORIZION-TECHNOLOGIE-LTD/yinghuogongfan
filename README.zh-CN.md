@@ -314,6 +314,10 @@ Docker 和手动安装指南都包含适用于 Windows、macOS 和 Linux 的详�
 
 有关详细的贡献指南，请参阅我们的 [CONTRIBUTING.md](CONTRIBUTING.md) 文件。
 
+### 翻译贡献
+
+如果您想帮助改进中文翻译或添加其他语言支持，请参阅 [TRANSLATIONS.md](TRANSLATIONS.md) 文件。我们也感谢 [Gitee 社区翻译项目](https://gitee.com/mail_osc/translate) 的贡献。
+
 ## Star 历史
 
 <a href="https://www.star-history.com/#MODSetter/SurfSense&Date">

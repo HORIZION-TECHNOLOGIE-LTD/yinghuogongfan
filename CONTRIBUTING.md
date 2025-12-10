@@ -189,6 +189,7 @@ Not ready to code? You can still help!
 - **Help triage issues** and validate bug reports
 - **Improve documentation** and examples
 - **Write tutorials** or blog posts about SurfSense
+- **Contribute translations** - Help make SurfSense accessible to more users! See [TRANSLATIONS.md](TRANSLATIONS.md) for details on how to contribute translations. We welcome contributions to improve existing translations or add support for new languages.
 
 ## 🎯 Recognition
 
